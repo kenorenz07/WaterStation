@@ -39,7 +39,7 @@ class AuthenticationController extends Controller
     {
         auth()->guard('user')->logout();
 
-        $request->session()->invalidate();
+        $request->user()->token()->revoke();
 
         return "success";
     }

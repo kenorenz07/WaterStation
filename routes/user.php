@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[AuthenticationController::class, 'login'])->name('login');
 
-Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api'] ],function(){
+Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user'] ],function(){
     // authenticated staff routes here 
     Route::get('/details',[AuthenticationController::class, 'details']);
  
