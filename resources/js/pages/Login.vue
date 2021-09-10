@@ -26,7 +26,6 @@
                             <v-tooltip bottom>
                             <template v-slot:activator="{ on }">
                                 <v-btn
-                                :href="source"
                                 icon
                                 large
                                 target="_blank"
@@ -55,6 +54,7 @@
                         <v-card-text>
                             <v-form>
                             <v-text-field
+                                v-model="form.username"
                                 label="Login"
                                 name="login"
                                 prepend-icon="person"
@@ -62,6 +62,7 @@
                             ></v-text-field>
 
                             <v-text-field
+                                v-model="form.password"
                                 id="password"
                                 label="Password"
                                 name="password"
@@ -70,9 +71,9 @@
                             ></v-text-field>
                             </v-form>
                         </v-card-text>
-                        <v-card-actions>
+                        <v-card-actions >
                             <v-spacer></v-spacer>
-                            <v-btn color="primary">Login</v-btn>
+                            <v-btn color="primary" @click="login_admin()">Login</v-btn>
                         </v-card-actions>
                         </v-card>
                     </v-flex>
@@ -82,3 +83,21 @@
         </v-app>
     </div>
 </template>
+<script>
+export default {
+    data: () => ({
+        form: {
+            username: 'admin1',
+            password: 123123,
+        }
+    }),
+    methods : {
+        login_admin(){
+            axios.post('/admin/login',this.form).then(({data}) => {
+                localStorage.setItem('token',data.token)
+                this.$router.push('/')
+            })
+        }
+    }
+}
+</script>
