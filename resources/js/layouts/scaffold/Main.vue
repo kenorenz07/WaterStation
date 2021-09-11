@@ -1,31 +1,34 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
+    
+    <!-- <v-navigation-drawer
+      
     >
-      <!--  -->
-    </v-navigation-drawer>
-
+    </v-navigation-drawer> -->
+    <app-drawer :is_open="drawer"></app-drawer>
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
 
-    <v-main>
-      <!--  -->
-    </v-main>
+   
   </v-app>
 </template>
 
 <script>
+  import AppDrawer from './Drawer.vue'
+  import AppContent from './Content.vue'
   export default {
-    data: () => ({ drawer: null }),
-    mounted () {
-        this.$admin.get('/admin/v1/details').then(({data}) => {
-            console.log(data,'data')
-        })
+    components : {
+      AppDrawer,
+      AppContent,
+    },
+    data: () => ({ 
+      drawer: true 
+    }),
+    mounted(){
     }
+  
   }
 </script>
