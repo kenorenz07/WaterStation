@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliveryMenTable extends Migration
+class CreateReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateDeliveryMenTable extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_men', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->string("image")->nullable();
-            $table->string('phone_number');
+            $table->foreignId('user_id')->constrained('users');
+            $table->text("review");
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateDeliveryMenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery_men');
+        Schema::dropIfExists('reviews');
     }
 }

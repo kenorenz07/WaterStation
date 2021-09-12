@@ -6,11 +6,8 @@
     >
     </v-navigation-drawer> -->
     <app-drawer :is_open="drawer"></app-drawer>
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Application</v-toolbar-title>
-    </v-app-bar>
+    <app-bar @drawerChange="drawer = !drawer"> </app-bar>
+    <app-content> </app-content>
 
    
   </v-app>
@@ -18,11 +15,13 @@
 
 <script>
   import AppDrawer from './Drawer.vue'
+  import AppBar from './Bar.vue'
   import AppContent from './Content.vue'
   export default {
     components : {
       AppDrawer,
       AppContent,
+      AppBar,
     },
     data: () => ({ 
       drawer: true 

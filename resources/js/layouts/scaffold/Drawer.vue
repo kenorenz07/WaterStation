@@ -9,7 +9,7 @@
                 <v-img src="https://cdn-icons-png.flaticon.com/512/599/599508.png"></v-img>
             </v-list-item-avatar>
 
-            <v-list-item-title >WATER SYSTEM</v-list-item-title>
+            <v-list-item-title >Welcome {{admin_detials.username}} !</v-list-item-title>
 
         </v-list-item>
 

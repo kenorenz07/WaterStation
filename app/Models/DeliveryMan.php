@@ -13,6 +13,14 @@ class DeliveryMan extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
-        'username', 'password',
+        'username', 'password','image','phone_number'
    ];
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
+    public function sales(){
+        return $this->hasMany(Sale::class);
+    }
 }
