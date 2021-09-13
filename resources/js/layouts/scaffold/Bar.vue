@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar app color="deep-blue accent-4">
+    <v-app-bar app color="light-blue accent-3">
       <v-app-bar-nav-icon @click="$emit('drawerChange')"></v-app-bar-nav-icon>
 
       <v-toolbar-title>FAIRWAYS WATER STATION</v-toolbar-title>
@@ -40,3 +40,6 @@
       </v-menu>
     </v-app-bar>
 </template>
+<style lang="scss" scoped>
+
+</style>

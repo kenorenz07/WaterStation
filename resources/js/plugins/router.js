@@ -6,6 +6,11 @@ import Login from './../pages/Login.vue';
 import NotFound from './../pages/Notfound.vue';
 
 import Dashboard from '../pages/admin/Dashboard.vue';
+import Customers from '../pages/admin/Customers.vue';
+import DeliveryMen from '../pages/admin/DeliveryMen.vue';
+import Products from '../pages/admin/Products.vue';
+import Orders from '../pages/admin/Orders.vue';
+import Sales from '../pages/admin/Sales.vue';
 
 Vue.use(VueRouter);
 
@@ -25,6 +30,31 @@ const router = new VueRouter({
                     path: '/dashboard',
                     name: 'dashboard',
                     component: Dashboard,
+                },
+                {
+                    path: '/products',
+                    name: 'products',
+                    component: Products,
+                },
+                {
+                    path: '/customers',
+                    name: 'customers',
+                    component: Customers,
+                },
+                {
+                    path: '/delivery-men',
+                    name: 'delivery-men',
+                    component: DeliveryMen,
+                },
+                {
+                    path: '/orders',
+                    name: 'orders',
+                    component: Orders,
+                },
+                {
+                    path: '/sales',
+                    name: 'Sales',
+                    component: Sales,
                 },
             
             ]
