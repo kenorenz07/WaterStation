@@ -1,6 +1,6 @@
 import axios from "axios";
 import router from './router'
-const baseURL = '';
+const baseURL = '/admin/v1';
 
 const httpClient = axios.create({
   baseURL,

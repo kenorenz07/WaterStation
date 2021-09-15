@@ -74,7 +74,7 @@
         },
     },
     mounted () {
-      this.$admin.get('/admin/v1/details').then(({data}) => {
+      this.$admin.get('/details').then(({data}) => {
           this.admin_detials = data
       })
     }

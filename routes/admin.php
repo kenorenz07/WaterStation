@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthenticationController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +20,14 @@ Route::post('/login',[AuthenticationController::class, 'login'])->name('login');
 
 Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin'] ],function(){
     // authenticated staff routes here 
+
+    //Authentication Controller
     Route::get('/details',[AuthenticationController::class, 'details']);
+    Route::post('logout',[AuthenticationController::class, 'logout']);
+
+    Route::get('/dashboard-statistics/{year}',[DashboardController::class,'getStatistics']);
  
 
-    Route::post('logout',[AuthenticationController::class, 'logout']);
 
 
 });

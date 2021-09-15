@@ -9,6 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 import vuetify from './plugins/vuetify';
+import apexchart from './plugins/apexcharts';
 import Axios from './plugins/axios';
 import router from './plugins/router';
 
