@@ -143,7 +143,7 @@
                 ></v-progress-linear>
             </template> 
 
-            <div id="chart">
+            <div>
                 <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
             </div>
         </v-card>
@@ -157,56 +157,53 @@
             loading: false,
             series: [
                 {
-                    name: "High - 2013",
-                    data: [28, 29, 33, 36, 32, 32, 33]
+                    name: "Quantity",
+                    data: [1,0,2,0,3,0,5,0,6,0,5,0]
                 }
             ],
             chartOptions: {
                 chart: {
-                height: 350,
-                type: 'line',
-                dropShadow: {
-                    enabled: true,
-                    color: '#000',
-                    top: 18,
-                    left: 7,
-                    blur: 10,
-                    opacity: 0.2
-                },
-                toolbar: {
-                    show: false
-                }
+                    height: 350,
+                    type: 'line',
+                    dropShadow: {
+                        enabled: true,
+                        color: '#000',
+                        top: 18,
+                        left: 7,
+                        blur: 10,
+                        opacity: 0.2
+                    },
+                    toolbar: {
+                        show: false
+                    }
                 },
                 colors: ['#77B6EA', '#545454'],
                 dataLabels: {
-                enabled: true,
+                    enabled: false,
                 },
                 stroke: {
-                curve: 'smooth'
+                    curve: 'smooth'
                 },
                 title: {
-                text: 'Average High & Low Temperature',
-                align: 'left'
+                    text: 'Sales',
+                    align: 'left'
                 },
                 grid: {
-                borderColor: '#e7e7e7',
-                row: {
-                    colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                    opacity: 0.5
-                },
-                },
-                markers: {
-                size: 1
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
                 },
                 xaxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sept','Oct', 'Nov','Dec'],
-                title: {
-                    text: 'Month'
-                }
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sept','Oct', 'Nov','Dec'],
+                    title: {
+                        text: 'Month'
+                    }
                 },
                 yaxis: {
                 title: {
-                    text: 'Number'
+                    text: 'Sales'
                 },
                 min: 5,
                 max: 40
@@ -225,17 +222,19 @@
         },
         methods: {
             getStatictics(){
+
                 this.$admin.get('dashboard-statistics/'+this.year).then(({data}) => {
                     this.statistics = data
+                    this.series = [{
+                        name: "Quantity",
+                        data: data.sales
+                    }]
 
-                    this.statistics.sales = data.sales
-                    console.log(data,'inamo')
+                    console.log(data,'inamo',this.series[0].data)
                 })
             },
             reserve () {
-                this.loading = true
 
-                setTimeout(() => (this.loading = false), 2000)
             },
         }
     }

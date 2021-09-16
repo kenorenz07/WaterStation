@@ -18,14 +18,14 @@
       </template>
 
 
-      <v-list 
-      >
+      <v-list >
         <v-list-item
           rounded
           v-for="item in items"
           :key="item.title"
           link
-          @click="$router.push(item.route)"
+          :to="item.route"
+          active-class="light-blue white--text text--lighten-1"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -38,7 +38,7 @@
       </v-list>
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block>
+          <v-btn block @click="logoutAdmin">
             Logout
           </v-btn>
         </div>
@@ -60,7 +60,8 @@
           { title: 'Delivery', icon: 'mdi-car', route: '/orders' },
           { title: 'Sales', icon: 'mdi-mdi-point-of-sale', route: '/sales' },
         ],
-        admin_detials: {}
+        admin_detials: {},
+        route_open: ''
       }
     },
     computed : {
@@ -77,6 +78,14 @@
       this.$admin.get('/details').then(({data}) => {
           this.admin_detials = data
       })
+    },
+    methods: {
+      logoutAdmin(){
+        this.$admin.post('/logout').then(({data}) => {
+          localStorage.removeItem("token")
+          this.$router.push('/login')
+        })
+      }
     }
   }
 </script>
