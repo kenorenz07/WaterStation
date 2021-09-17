@@ -17,6 +17,7 @@ class CreateDeliveryMenTable extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('password');
+            $table->string('name')->nullable();
             $table->string("image")->nullable();
             $table->string('phone_number');
             $table->timestamps();

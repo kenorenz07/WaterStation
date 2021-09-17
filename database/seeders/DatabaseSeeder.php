@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
 
         DeliveryMan::create([
             "username" => "delivery1",
+            "name" => "John Doe d1",
             "phone_number" => "08928663354",
             "password" => bcrypt(123123),
         ]);

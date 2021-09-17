@@ -55,10 +55,10 @@
         items: [
           { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
           { title: 'Products', icon: 'mdi-cash-100', route: '/products' },
-          { title: 'Orders', icon: 'mdi-cart', route: '/customers' },
-          { title: 'Customers', icon: 'mdi-account-group', route: '/delivery-men' },
-          { title: 'Delivery', icon: 'mdi-car', route: '/orders' },
-          { title: 'Sales', icon: 'mdi-mdi-point-of-sale', route: '/sales' },
+          { title: 'Orders', icon: 'mdi-cart', route: '/orders' },
+          { title: 'Customers', icon: 'mdi-account-group', route: '/customers' },
+          { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
+          { title: 'Sales', icon: 'mdi-point-of-sale', route: '/sales' },
         ],
         admin_detials: {},
         route_open: ''

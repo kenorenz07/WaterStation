@@ -205,8 +205,8 @@
                 title: {
                     text: 'Sales'
                 },
-                min: 5,
-                max: 40
+                    min: 5,
+                    max: 60
                 },
                 legend: {
                 position: 'top',
@@ -227,7 +227,8 @@
                     this.statistics = data
                     this.series = [{
                         name: "Quantity",
-                        data: data.sales
+                        data: [19,20,42,20,43,10,15,10,16,10,54,10]
+                        // data: data.sales
                     }]
 
                     console.log(data,'inamo',this.series[0].data)

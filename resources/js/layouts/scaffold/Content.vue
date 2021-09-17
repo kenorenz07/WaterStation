@@ -3,7 +3,7 @@
         <v-container fluid >
             <v-row justify="start" align="start">
                 <v-col >
-                    <transition name="fade" mode="out-in">
+                    <transition name="fade">
                         <router-view></router-view>
                     </transition>
                 </v-col>
