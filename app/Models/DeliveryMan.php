@@ -13,7 +13,7 @@ class DeliveryMan extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
-        'username', 'password','image','phone_number'
+        'name','username', 'password','image','phone_number'
    ];
 
     public function orders(){

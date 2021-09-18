@@ -5,12 +5,18 @@ import Main from './../layouts/scaffold/Main.vue';
 import Login from './../pages/Login.vue';
 import NotFound from './../pages/Notfound.vue';
 
-import Dashboard from '../pages/admin/Dashboard.vue';
-import Customers from '../pages/admin/Customers.vue';
-import DeliveryMen from '../pages/admin/DeliveryMen.vue';
-import Products from '../pages/admin/Products.vue';
-import Orders from '../pages/admin/Orders.vue';
-import Sales from '../pages/admin/Sales.vue';
+import Dashboard from '../pages/admin/index/Dashboard.vue';
+import Customers from '../pages/admin/index/Customers.vue';
+import DeliveryMen from '../pages/admin/index/DeliveryMen.vue';
+import Products from '../pages/admin/index/Products.vue';
+import Orders from '../pages/admin/index/Orders.vue';
+import Sales from '../pages/admin/index/Sales.vue';
+
+import Customer from '../pages/admin/view/Customer.vue';
+import DeliveryMan from '../pages/admin/view/DeliveryMan.vue';
+import Product from '../pages/admin/view/Product.vue';
+import Order from '../pages/admin/view/Order.vue';
+import Sale from '../pages/admin/view/Sale.vue';
 
 Vue.use(VueRouter);
 
@@ -26,6 +32,8 @@ const router = new VueRouter({
                 requiresAuth: true
             },
             children: [
+
+                // index
                 {
                     path: '/dashboard',
                     name: 'dashboard',
@@ -53,8 +61,35 @@ const router = new VueRouter({
                 },
                 {
                     path: '/sales',
-                    name: 'Sales',
+                    name: 'sales',
                     component: Sales,
+                },
+
+                // view
+                {
+                    path: '/product/:id',
+                    name: 'product',
+                    component: Product,
+                },
+                {
+                    path: '/customer/:id',
+                    name: 'customer',
+                    component: Customer,
+                },
+                {
+                    path: '/delivery-man/:id',
+                    name: 'delivery-man',
+                    component: DeliveryMan,
+                },
+                {
+                    path: '/order/:id',
+                    name: 'order',
+                    component: Order,
+                },
+                {
+                    path: '/sale/:id',
+                    name: 'sale',
+                    component: Sale,
                 },
             
             ]
