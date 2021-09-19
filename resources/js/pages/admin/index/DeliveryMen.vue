@@ -16,7 +16,7 @@
             <v-row dense>
                 <v-col
                 v-for="deliver_man in deliverMen"
-                :key="deliver_man.title"
+                :key="deliver_man.id"
                 :cols="4"
                 >
                     <v-card
@@ -27,35 +27,49 @@
                         <v-list-item three-line>
                             <v-list-item-content>
                                 <v-list-item-title class="text-h5 mb-1">
-                                    John Doe
+                                    {{deliver_man.name}}
                                 </v-list-item-title>
-                                <v-list-item-subtitle>Username: delivery_man01</v-list-item-subtitle>
+                                <v-list-item-subtitle>Username: {{deliver_man.username}}</v-list-item-subtitle>
                                 <v-list-item-subtitle>Orders taken :</v-list-item-subtitle>
                             </v-list-item-content>
 
                             <v-list-item-avatar
-                                size="100" rounded
+                                size="100" 
                             >
-                                <v-img src="https://scontent.fceb1-2.fna.fbcdn.net/v/t1.6435-9/241439838_4465586350227792_3670855029139333701_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeF3vyn6YvL9o1RF9fGnpHCjWVrCGOG7wZFZWsIY4bvBkcuCY4vL-sgWetXe4FVS5q5nvK7CV6lfTNWNPwxOaLee&_nc_ohc=F9LuBllnMx8AX9eLgoc&_nc_ht=scontent.fceb1-2.fna&oh=8611d72f1b6b04d769a3f1436724f47f&oe=616A7C39"></v-img>
+                                <v-img :src="deliver_man.image ? '/storage/'+deliver_man.image :'https://scontent.fceb1-2.fna.fbcdn.net/v/t1.6435-9/241439838_4465586350227792_3670855029139333701_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeF3vyn6YvL9o1RF9fGnpHCjWVrCGOG7wZFZWsIY4bvBkcuCY4vL-sgWetXe4FVS5q5nvK7CV6lfTNWNPwxOaLee&_nc_ohc=F9LuBllnMx8AX9eLgoc&_nc_ht=scontent.fceb1-2.fna&oh=8611d72f1b6b04d769a3f1436724f47f&oe=616A7C39'"></v-img>
                             </v-list-item-avatar>
                         </v-list-item>
 
                         <v-card-actions>
                             <v-row class="px-2">
-                                <v-col cols="6">
-                                    <p class="text-h4 mb-1">53</p>
+                                <v-col cols="7">
+                                    <p class="text-h4 mb-1">{{deliver_man.orders ? deliver_man.orders.length : 0}}</p>
                                 </v-col>
-                                <v-col cols="3"></v-col>
-                                <v-col cols="3">
-                                    <v-btn
+                                <v-col cols="2">
+                                   <v-btn
                                         icon
-                                        
-                                        color="light-blue"
+                                        @click="deleteDeliveryMan(deliver_man.id)"
+                                        color="red"
                                     >
                                         <v-icon dark>
-                                            mdi-eye
+                                            mdi-delete
                                         </v-icon>
                                     </v-btn>
+                                </v-col>
+                                <v-col cols="3">
+                                    <div class="d-flex">
+                                        
+                                        <v-btn
+                                            icon
+                                            @click="$router.push('/delivery-man/'+deliver_man.id)"
+                                            color="light-blue"
+                                        >
+                                            <v-icon dark>
+                                                mdi-eye
+                                            </v-icon>
+                                        </v-btn>
+                                    </div>
+                                 
                                 </v-col>
                             </v-row>
                             
@@ -64,7 +78,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <DeliveryManForm :form="deliveryManForm" :dialogState="addition_dailog" @close="addition_dailog = false" @save="addition_dailog = false" />
+        <DeliveryManForm :form="deliveryManForm" :dialogState="addition_dailog" @close="addition_dailog = false" @save="addition_dailog = false,saveDeliveryMan()" />
     </div>
 </template>
 <script>
@@ -82,26 +96,27 @@
                 phone_number: '',
                 image: '',
             },
-            deliverMen : [
-                {
-                    title: 'gs'
-                },
-                {
-                    title: 'gs'
-                },
-                { 
-                    title: 'gs'
-                },
-                {
-                    title: 'gs'
-                },
-                {
-                    title: 'gs'
-                },
-                { 
-                    title: 'gs'
-                },
-            ],
+            deliverMen : [],
         }),
+        created(){
+            this.initialize()
+        },
+        methods : { 
+            initialize(){
+                this.$admin.get('/delivery-man/all').then(({data}) => {
+                    this.deliverMen = data
+                })
+            },
+            saveDeliveryMan () {
+                this.$admin.post('/delivery-man/create',this.deliveryManForm).then(({data}) =>{
+                    this.initialize()
+                })
+            },
+            deleteDeliveryMan (id) {
+                this.$admin.delete('/delivery-man/delete/'+id).then(({data}) => {
+                    this.initialize()
+                })
+            },
+        }
     }
 </script>

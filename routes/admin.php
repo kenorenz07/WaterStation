@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DeliveryManController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login',[AuthenticationController::class, 'login'])->name('login');
+Route::post('/login',[AuthenticationController::class, 'login']);
 
 Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin'] ],function(){
     // authenticated staff routes here 
@@ -28,6 +29,12 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::get('/dashboard-statistics/{year}',[DashboardController::class,'getStatistics']);
  
 
+    // DELIVERY MAN
+    Route::get('/delivery-man/all',[DeliveryManController::class,'index']);
+    Route::get('/delivery-man/show/{delivery_man}',[DeliveryManController::class,'show']);
+    Route::post('/delivery-man/create',[DeliveryManController::class,'store']);
+    Route::put('/delivery-man/update/{delivery_man}',[DeliveryManController::class,'update']);
+    Route::delete('/delivery-man/delete/{delivery_man}',[DeliveryManController::class,'delete']);
 
 
 });

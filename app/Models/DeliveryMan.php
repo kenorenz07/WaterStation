@@ -16,6 +16,8 @@ class DeliveryMan extends Authenticatable
         'name','username', 'password','image','phone_number'
    ];
 
+   protected $with = ['orders'];
+
     public function orders(){
         return $this->hasMany(Order::class);
     }

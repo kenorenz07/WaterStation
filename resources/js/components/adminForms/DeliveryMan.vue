@@ -27,21 +27,25 @@
                             <v-text-field
                                 label="Name*"
                                 required
+                                v-model="form.name"
                             ></v-text-field>
                             <v-text-field
                                 label="Username*"
                                 required
+                                v-model="form.username"
                             ></v-text-field>
                              <v-text-field
                                 v-if="form.id == '' || form.id == null"
                                 label="Password*"
                                 type="password"
                                 required
+                                v-model="form.password"
                             ></v-text-field>
                             <v-text-field
                                 label="Phone Number*"
                                 type="number"
                                 required
+                                v-model="form.phone_number"
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -88,7 +92,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="$emit('close')"
+            @click="$emit('save')"
           >
             Save
           </v-btn>
