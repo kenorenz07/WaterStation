@@ -66,7 +66,10 @@ class DeliveryManController extends Controller
 
     public function show(DeliveryMan $delivery_man)
     {
-        return $delivery_man;
+        return [
+            "delivery_man" => $delivery_man,
+            "orders" => $delivery_man->orders,
+        ];
     }
 
 

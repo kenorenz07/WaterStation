@@ -19,6 +19,8 @@ class Order extends Model
         'time_to_deliver',
    ];
 
+   protected $with = ['user','delivery_man'];
+
    public function user(){
        return $this->belongsTo(User::class);
    }
