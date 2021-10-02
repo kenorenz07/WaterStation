@@ -127,7 +127,16 @@
     },
     
     changeRefillState(product){
-      console.log(product.id,product.is_refill)
+      this.productForm = {
+        id: product.id,
+        name: product.name ,
+        description: product.description ,
+        is_refill: product.is_refill ,
+        price: product.price ,
+        image: '/storage/'+product.image 
+      }
+
+      this.saveProduct()
     },
     addProduct(){
       this.productForm = {
