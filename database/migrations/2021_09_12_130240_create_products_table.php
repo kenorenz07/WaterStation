@@ -16,9 +16,11 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->string("description");
+            $table->boolean("is_refill")->default(1);
             $table->string("image")->nullable();
             $table->float("price",8,2);
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

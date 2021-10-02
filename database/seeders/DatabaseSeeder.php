@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Container;
 use App\Models\DeliveryMan;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -34,6 +36,14 @@ class DatabaseSeeder extends Seeder
             "phone_number" => "08928663354",
             "password" => bcrypt(123123),
         ]);
+
+        for($i = 1; $i <=50;$i++){
+            Product::create([
+                "name" => "product_".$i,
+                "price" => $i + .01,
+                "description" => "size 1x".$i
+            ]);
+        }
 
         // \App\Models\User::factory(10)->create();
     }

@@ -109,6 +109,13 @@
             },
             saveDeliveryMan () {
                 this.$admin.post('/delivery-man/create',this.deliveryManForm).then(({data}) =>{
+                    this.deliveryManForm = {
+                        name:'',
+                        username: '',
+                        password: '',
+                        phone_number: '',
+                        image: '',
+                    }
                     this.initialize()
                 })
             },

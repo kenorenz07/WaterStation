@@ -4,115 +4,175 @@
         class="mx-auto px-5 py-5"
         outlined
     >
-        <v-data-table
-            :headers="headers"  
-            :items="desserts"
-            :items-per-page="10"
-            class="elevation-1"
-        ></v-data-table>
+      <v-card-title>
+        Products
+      <v-spacer></v-spacer>
+        <v-icon
+          large
+          @click="addProduct"
+        >
+          mdi-plus
+        </v-icon>
+      </v-card-title>
+      <v-data-table
+        :footer-props="footerProps"
+        :page="page"
+        :pageCount="numberOfPages"
+        :headers="headers"
+        :items="products"
+        :options.sync="options"
+        :server-items-length="total"
+        :items-per-page="options.itemsPerPage"
+        @update:options="initialize"
+        :loading="loading"
+        class="elevation-1"
+      >
+        <template v-slot:item.is_refill="{ item }">
+          <v-switch
+            color="light-blue "
+            v-model="item.is_refill"
+            @click="changeRefillState(item)"
+          ></v-switch>
+        </template>
+        <template v-slot:item.actions="{ item }">
+          <v-icon
+            class="mr-2"
+            @click="editProduct(item)"
+          >
+            mdi-pencil
+          </v-icon>
+          <v-icon
+            @click="deleteProduct(item)"
+
+          >
+            mdi-delete
+          </v-icon>
+        </template>
+      </v-data-table>
     </v-card>
+    <ProductForm :form="productForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
+
 </div>
 </template>
 <script>
+  import ProductForm from '../../../components/adminForms/Product.vue'
   export default {
-    data () {
+    components: {
+      ProductForm
+    },
+    data() {
       return {
+        page: 0,
+        total: 0,
+        numberOfPages: 0,
+        products: [],
+        loading: true,
+        options: {
+          itemsPerPage: 10
+        },
+        footerProps :{
+          "items-per-page-options" : [5,10,15, 30, ]
+        },
         headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'start',
-            sortable: false,
-            value: 'name',
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
+          { text: "Product Name", value: "name" },
+          { text: "Description", value: "description" },
+          { text: "For Refill", value: "is_refill" },
+          { text: "Price", value: "price" },
+          { text: "Actions", value: "actions" },
         ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
-          },
-        ],
+        addition_edition_dailog: false,
+        productForm: {
+          id:null,
+          description:'',
+          is_refill: true,
+          price: 0.0,
+          image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
+        }
+      };
+  },
+  //this one will populate new data set when user changes current page. 
+  watch: {
+    options: {
+      handler(val) {
+        this.initialize() 
+      },
+    },
+    deep: true,
+  },
+  methods: {
+    //Reading data from API method. 
+    initialize() {
+        this.productForm = {
+          id:null,
+          description:'',
+          is_refill: true,
+          price: 0.0,
+          image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
+        }
+        this.loading = true;
+        const { page, itemsPerPage } = this.options;
+        let params = { 
+          page: page,
+          per_page: itemsPerPage
+        } 
+        this.$admin.get('/product/all', { params })
+          .then(({data}) => {
+            //Then injecting the result to datatable parameters.
+            this.loading = false;
+            this.products = data.data;
+            this.page = data.page;
+            this.total = data.total;
+            this.numberOfPages = data.last_page;
+          });
+    },
+    
+    changeRefillState(product){
+      console.log(product.id,product.is_refill)
+    },
+    addProduct(){
+      this.productForm = {
+        id:null,
+        description:'',
+        is_refill: true,
+        price: 0.0,
+        image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
+      }
+      this.addition_edition_dailog = true
+    },
+    editProduct(product){
+      this.productForm = {
+        id: product.id,
+        name: product.name ,
+        description: product.description ,
+        is_refill: product.is_refill ,
+        price: product.price ,
+        image: '/storage/'+product.image 
+      }
+      this.addition_edition_dailog = true
+    },
+    saveProduct(){
+      if(this.productForm.id){
+        this.$admin.put('/product/update/'+this.productForm.id,this.productForm).then(({data}) => {
+          this.initialize()
+        })
+      }
+      else{
+        this.$admin.post('/product/create',this.productForm).then(({data}) =>{
+      
+          this.initialize()
+        })
       }
     },
+    deleteProduct(product){
+      this.$admin.delete('/product/delete/'+ product.id).then(({data}) => {
+        this.initialize() 
+      })
+    }
+  },
+  
+  //this will trigger in the onReady State
+  mounted() {
+    this.initialize();
+  },
   }
 </script>
