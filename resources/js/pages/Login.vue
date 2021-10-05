@@ -17,63 +17,38 @@
                     >
                         <v-card class="elevation-12">
                         <v-toolbar
-                            color="primary"
+                            color="light-blue"
                             dark
                             flat
                         >
-                            <v-toolbar-title>Login form</v-toolbar-title>
-                            <v-spacer></v-spacer>
-                            <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                icon
-                                large
-                                target="_blank"
-                                v-on="on"
-                                >
-                                <v-icon>mdi-code-tags</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Source</span>
-                            </v-tooltip>
-                            <v-tooltip right>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                icon
-                                large
-                                href="https://codepen.io/johnjleider/pen/pMvGQO"
-                                target="_blank"
-                                v-on="on"
-                                >
-                                <v-icon>mdi-codepen</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Codepen</span>
-                            </v-tooltip>
+                            <v-toolbar-title>Water Station</v-toolbar-title>
+                           
                         </v-toolbar>
                         <v-card-text>
                             <v-form>
-                            <v-text-field
-                                v-model="form.username"
-                                label="Login"
-                                name="login"
-                                prepend-icon="person"
-                                type="text"
-                            ></v-text-field>
+                                <v-text-field
+                                    v-model="form.username"
+                                    label="Login"
+                                    name="login"
+                                    prepend-icon="person"
+                                    type="text"
+                                ></v-text-field>
 
-                            <v-text-field
-                                v-model="form.password"
-                                id="password"
-                                label="Password"
-                                name="password"
-                                prepend-icon="lock"
-                                type="password"
-                            ></v-text-field>
+                                <v-text-field
+                                    v-model="form.password"
+                                    id="password"
+                                    label="Password"
+                                    name="password"
+                                    prepend-icon="lock"
+                                    :type="show_pass ? 'text' : 'password'"
+                                    :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
+                                    @click:append="show_pass = !show_pass"
+                                ></v-text-field>
                             </v-form>
                         </v-card-text>
                         <v-card-actions >
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="login_admin()">Login</v-btn>
+                            <v-btn color="light-blue" @click="login_admin()">Login</v-btn>
                         </v-card-actions>
                         </v-card>
                     </v-flex>
@@ -86,6 +61,7 @@
 <script>
 export default {
     data: () => ({
+        show_pass: false,
         form: {
             username: 'admin1',
             password: 123123,
@@ -94,8 +70,14 @@ export default {
     methods : {
         login_admin(){
             axios.post('/admin/login',this.form).then(({data}) => {
-                localStorage.setItem('token',data.token)
-                this.$router.push('/dashboard')
+                if(data.error) {
+                    alert("Username or password are incorrect")
+                }
+                else{
+
+                    localStorage.setItem('token',data.token)
+                    this.$router.push('/dashboard')
+                }
             })
         }
     }

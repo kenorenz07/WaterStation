@@ -95,7 +95,7 @@ class DeliveryManController extends Controller
     
         $delivery_man->save();
 
-        return 'inmamo';
+        return 'success';
 
     }
 

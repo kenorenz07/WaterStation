@@ -37,9 +37,11 @@
                              <v-text-field
                                 v-if="form.id == '' || form.id == null"
                                 label="Password*"
-                                type="password"
                                 required
                                 v-model="form.password"
+                                :type="show_pass ? 'text' : 'password'"
+                                :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="show_pass = !show_pass"
                             ></v-text-field>
                             <v-text-field
                                 label="Phone Number*"
@@ -122,6 +124,7 @@
         }
     },
     data: () => ({
+      show_pass : false,
       dialog: false,
     }),
     methods : {

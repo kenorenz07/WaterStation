@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryManController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,13 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::post('/product/create',[ProductController::class,'store']);
     Route::put('/product/update/{product}',[ProductController::class,'update']);
     Route::delete('/product/delete/{product}',[ProductController::class,'delete']);
+
+    // CUSTOMERS    
+    Route::get('/user/all',[UserController::class,'index']);
+    Route::get('/user/show/{user}',[UserController::class,'show']);
+    Route::post('/user/create',[UserController::class,'store']);
+    Route::put('/user/update/{user}',[UserController::class,'update']);
+    Route::delete('/user/delete/{user}',[UserController::class,'delete']);
 
 
 });

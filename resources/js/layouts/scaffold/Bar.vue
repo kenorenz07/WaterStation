@@ -2,7 +2,7 @@
     <v-app-bar app color="light-blue">
       <v-app-bar-nav-icon @click="$emit('drawerChange')"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>FAIRWAYS WATER STATION</v-toolbar-title>
+      <v-toolbar-title>WATER STATION</v-toolbar-title>
 
         <v-spacer></v-spacer>
 

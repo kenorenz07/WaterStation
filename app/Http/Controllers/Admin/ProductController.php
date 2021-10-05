@@ -93,12 +93,15 @@ class ProductController extends Controller
     
         $product->save();
 
-        return 'inmamo';
+        return 'success';
 
     }
 
     public function delete(Product $product)
     {
+        if($product->image){
+            Storage::delete('app/public/updloads/'.$product->image);
+        }
         $product->delete();
     }
 
