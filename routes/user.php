@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\AuthenticationController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,12 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user']
     Route::get('/details',[AuthenticationController::class, 'details']);
     Route::post('logout',[AuthenticationController::class, 'logout']);
 
-    Route::get('/products/all',[ProductController::class,'index']);
+    Route::get('/product/all',[ProductController::class,'index']);
+
+    Route::get('/cart/all/{user}',[CartController::class,'index']);
+    Route::post('/cart/add/{user}/{product}',[CartController::class,'addProductToCart']);
+    Route::put('/cart/update/{cart}',[CartController::class,'updateProductQuantity']);
+    Route::delete('/cart/delete/{cart}',[CartController::class,'removeProductToCart']);
 
 
 });

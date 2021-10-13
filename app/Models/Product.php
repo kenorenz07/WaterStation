@@ -12,4 +12,8 @@ class Product extends Model
     protected $fillable = [
         "name", "description","is_refill","image","price"
     ];
+
+    public function carts(){
+        return $this->hasMany(Cart::class);
+    }
 }
