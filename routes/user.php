@@ -29,8 +29,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user']
 
     Route::get('/product/all',[ProductController::class,'index']);
 
-    Route::get('/cart/all/{user}',[CartController::class,'index']);
-    Route::post('/cart/add/{user}/{product}',[CartController::class,'addProductToCart']);
+    Route::get('/cart/all/',[CartController::class,'index']);
+    Route::post('/cart/add/{product}',[CartController::class,'addProductToCart']);
     Route::put('/cart/update/{cart}',[CartController::class,'updateProductQuantity']);
     Route::delete('/cart/delete/{cart}',[CartController::class,'removeProductToCart']);
 

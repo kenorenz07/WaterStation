@@ -45,8 +45,8 @@ class AuthenticationController extends Controller
     }
 
 
-    public function details()
+    public function details(Request $request)
     {
-        return response()->json(auth()->guard('user')->user(), 200);
+        return response()->json($request->user(), 200);
     }
 }

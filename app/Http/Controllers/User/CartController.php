@@ -7,17 +7,18 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function index(User $user)
+    public function index(Request $request)
     {
-        return $user->carts;
+        return $request->user()->carts;
     }
 
-    public function addProductToCart(User $user,Product $product,Request $request)
+    public function addProductToCart(Product $product,Request $request)
     {
-        return $user->carts()->create([
+        return $request->user()->carts()->create([
             'product_id' => $product->id,
             'total_price' => $product->price * $request->quantity,
             'quantity' => $request->quantity
