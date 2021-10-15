@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login',[AuthenticationController::class, 'login']);
-Route::post('/test',function(){
-    return "test";
-});
+Route::post('/register',[AuthenticationController::class, 'register']);
 
 Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user'] ],function(){
     // authenticated staff routes here 

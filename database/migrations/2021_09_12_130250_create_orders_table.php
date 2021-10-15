@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('delivery_man_id')->nullable()->constrained('delivery_men');
             $table->json('orders');
+            $table->boolean('is_asap')->default(0);
             $table->date('date_to_deliver')->nullable();
             $table->time('time_to_deliver')->nullable();
             $table->float('total', 8, 2);

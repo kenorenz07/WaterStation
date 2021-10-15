@@ -25,6 +25,12 @@ class DatabaseSeeder extends Seeder
             "password" => bcrypt(123123),
         ]);
 
+        User::create([
+            "name" => "keno_erenz",
+            "email" => "keno@renz.com",
+            "phone_number" => "08928663354",
+            "password" => bcrypt(123123123),
+        ]);
         Admin::create([
             "username" => "admin1",
             "password" => bcrypt(123123),
@@ -41,6 +47,7 @@ class DatabaseSeeder extends Seeder
             Product::create([
                 "name" => "product_".$i,
                 "price" => $i + .01,
+                "image" => "pro_1633188855.jpeg",
                 "description" => "size 1x".$i
             ]);
         }

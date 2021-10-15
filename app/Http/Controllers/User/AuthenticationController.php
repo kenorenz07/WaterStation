@@ -13,6 +13,23 @@ class AuthenticationController extends Controller
         // $this->middleware('guest:user')->except('logout');
     }
 
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+            'password' => 'required',
+        ]);
+
+        return User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone_number' => $request->phone_number,
+        ]);
+    }
+
     public function login(Request $request)
     {
         $validator = $request->validate([
