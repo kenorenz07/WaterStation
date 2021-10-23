@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\User\AuthenticationController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,5 +32,6 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user']
     Route::put('/cart/update/{cart}',[CartController::class,'updateProductQuantity']);
     Route::delete('/cart/delete/{cart}',[CartController::class,'removeProductToCart']);
 
+    Route::post('/place-order/',[OrderController::class,'placeOrder']);
 
 });
