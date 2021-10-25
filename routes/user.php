@@ -33,5 +33,6 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user']
     Route::delete('/cart/delete/{cart}',[CartController::class,'removeProductToCart']);
 
     Route::post('/place-order/',[OrderController::class,'placeOrder']);
+    Route::get('/order/all/',[OrderController::class,'getAllOrdersOfUser']);
 
 });

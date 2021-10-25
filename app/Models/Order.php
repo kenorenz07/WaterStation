@@ -19,6 +19,8 @@ class Order extends Model
         'time_to_deliver',
    ];
 
+    // 'on-the-way','assinged-to-driver', 'pending','delivered','accepted','denied'
+
    protected $with = ['user','delivery_man'];
 
    public function user(){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -29,5 +30,11 @@ class OrderController extends Controller
             'status' => 'pending',
         ]);
 
+    }
+    public function getAllOrdersOfUser(Request $request)
+    {
+        $user = $request->user();
+        
+        return $user->orders;
     }
 }
