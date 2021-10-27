@@ -31,6 +31,7 @@
 
                     <v-card-actions>
                         <v-btn
+                            @click="$router.push('/customers')"
                             outlined
                             rounded
                             text
@@ -64,7 +65,7 @@
                             x-large
                             color="light-blue accent-3"
                         >
-                            mdi-cart
+                            mdi-cup-water
                             
                         </v-icon>
                     </v-list-item-avatar>
@@ -75,6 +76,7 @@
 
                     <v-card-actions>
                         <v-btn
+                            @click="$router.push('/products')"
                             outlined
                             rounded
                             text
@@ -119,6 +121,7 @@
 
                     <v-card-actions>
                         <v-btn
+                            @click="$router.push('/orders')"
                             outlined
                             rounded
                             text
