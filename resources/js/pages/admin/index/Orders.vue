@@ -48,23 +48,23 @@
             <v-row >
                 <v-col cols='12'>
                     <div class="d-flex justify-end" >
-                        <div class="on-the-way mr-4 p-2 status-box text-white">
-                            on-the-way
-                        </div>
-                        <div class="assinged-to-driver mr-4 p-2 status-box text-white">
-                            assinged-to-driver
-                        </div>
                         <div class="pending mr-4 p-2 status-box text-white">
                             pending
-                        </div>
-                        <div class="delivered mr-4 p-2 status-box text-white">
-                            delivered
                         </div>
                         <div class="accepted mr-4 p-2 status-box text-white">
                             accepted
                         </div>
                         <div class="denied mr-4 p-2 status-box text-white">
                             denied
+                        </div>
+                        <div class="assigned-to-driver mr-4 p-2 status-box text-white">
+                            assigned-to-driver
+                        </div>
+                        <div class="on-the-way mr-4 p-2 status-box text-white">
+                            on-the-way
+                        </div>
+                        <div class="delivered mr-4 p-2 status-box text-white">
+                            delivered
                         </div>
                     </div>
                 </v-col>
@@ -111,16 +111,26 @@
                                         </div>
                                         <div v-else >
                                             <p  class="ml-2 text-grey">
-                                                Not Assinged
+                                                Not Assigned
                                             </p>
                                         </div>
                                         <p> Ordered at : {{moment(order.created_at).calendar()}}</p>
+                                        <p> Date to Deliver : {{order.date_to_deliver ? order.date_to_deliver : "Not Defined" }}</p>
+                                        <p> Time to Deliver : {{order.time_to_deliver ? order.time_to_deliver : "Not Defined" }}</p>
                                         <div>
                                             Total Bill : ₱ {{order.total}}
                                         </div>
+                                        <v-btn
+                                            block
+                                            :class="order.status"
+                                            @click="setOrderToBeUpdated(order)"
+                                            class="text-white mt-2"
+                                        >
+                                            Update Status
+                                        </v-btn>
                                     </v-col>
                                     <v-col cols="9">
-                                        <v-simple-table height="300" :class="order.status">
+                                        <v-simple-table height="440" >
                                             <template v-slot:default>
                                                 <thead>
                                                     <tr>
@@ -187,20 +197,29 @@
                 </v-col>
             </v-row>
         </v-container>
+        <OrderForm :order="order_to_update" :dialogState="status_dailog" @close="status_dailog = false" />
+
     </div>
 </template>
 
 <script>
+import OrderForm from '../../../components/adminForms/Order.vue'
 export default {
     data : () =>({
         orders: [],
         page : 1,
         pageNumbers: 1,
         date_pick: false,
-        status_filters : ['on-the-way','assinged-to-driver', 'pending','delivered','accepted','denied','all'],
+        status_filters : ['on-the-way','assigned-to-driver', 'pending','delivered','accepted','denied','all'],
         status_filter : 'all',
-        date_filter: (new Date()).toISOString().split('T')[0]
+        date_filter: (new Date()).toISOString().split('T')[0],
+        status_dailog : false,
+        order_to_update : {},
+
     }),
+    components : {
+        OrderForm,
+    },
     mounted () {
         this.initialize()
     },
@@ -223,7 +242,14 @@ export default {
                 this.page = data.current_page;
                 this.pageNumbers = data.last_page;
             });
-        }
+        },
+        setOrderToBeUpdated(order) {
+            this.order_to_update = JSON.parse(JSON.stringify(order))
+            this.status_dailog = true
+        },
+        updateOrderStatus(){
+
+        },
     },
     watch : {
         page (){
@@ -246,7 +272,7 @@ export default {
 .on-the-way{
     background-color:rgb(233, 135, 151)!important;
 }
-.assinged-to-driver{
+.assigned-to-driver{
     background-color: rgb(216, 166, 72)!important;
 }
 .pending{
