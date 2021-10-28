@@ -1,23 +1,177 @@
 <template>
     <div>
         <v-container>
+            <div class="d-flex justify-space-between mb-6" >
+                <div>
+                    <v-menu
+                        v-model="date_pick"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                    >
+                        <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="date_filter"
+                            label="Select "
+                            prepend-icon="mdi-calendar"
+                            readonly
+                             color="light-blue"
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                        </template>
+                        <v-date-picker
+                         color="light-blue"
+                            v-model="date_filter"
+                            @input="date_pick = false"
+                        ></v-date-picker>
+                    </v-menu>  
+                </div>
+                <div>
+                    <h1> ORDERS </h1>
+                </div>
+                <div>
+                    <v-select
+                        v-model="status_filter"
+                        :items="status_filters"
+                        menu-props="auto"
+                        label="Status Filter"
+                        color="light-blue"
+                        hide-details
+                        prepend-icon="mdi-filter-variant"
+                        single-line
+                    ></v-select>
+                </div>
+            </div>
             <v-row >
-                <v-col cols=12 :max-height="200">
-                    <v-card class="">
-                        <v-card-text>
-                            <div class="d-flex">
-                                <p class="text-h4 text--primary">
-                                    ORDER #/
-                                </p>
-                                <p>adjective</p>
-                                <div class="text--primary">
-                                    well meaning and kindly.<br>
-                                    "a benevolent smile"
-                                </div>
-                            </div>
-                           
-                        </v-card-text>
-                    </v-card>
+                <v-col cols='12'>
+                    <div class="d-flex justify-end" >
+                        <div class="on-the-way mr-4 p-2 status-box text-white">
+                            on-the-way
+                        </div>
+                        <div class="assinged-to-driver mr-4 p-2 status-box text-white">
+                            assinged-to-driver
+                        </div>
+                        <div class="pending mr-4 p-2 status-box text-white">
+                            pending
+                        </div>
+                        <div class="delivered mr-4 p-2 status-box text-white">
+                            delivered
+                        </div>
+                        <div class="accepted mr-4 p-2 status-box text-white">
+                            accepted
+                        </div>
+                        <div class="denied mr-4 p-2 status-box text-white">
+                            denied
+                        </div>
+                    </div>
+                </v-col>
+
+                <v-col cols="12" >
+                    <v-expansion-panels focusable>
+                        <v-expansion-panel
+                        class="text-white"
+                        v-for="(order,i) in orders"
+                        :key="i"
+                        :class="order.status"
+                        >
+                            <v-expansion-panel-header>Order # {{order.id}} by {{order.user.name}}</v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <v-row class="mt-1">
+                                    <v-col cols="3">
+                                        <p> Customer Details</p>
+                                        <div class="d-flex ml-4">
+                                            <v-avatar>
+                                                <img
+                                                    :src="order.user.image ? '/storage/'+ order.user.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
+                                                    :alt="order.user.name"
+                                                >
+                                            </v-avatar>
+                                            <div class="ml-4">
+                                                <p class="m-0">{{order.user.name}}</p>
+                                                <p>{{order.user.email}}</p>
+                                                <p>{{order.user.phone_number}}</p>
+                                            </div>
+                                        </div>
+                                        <p> Delivery Man Details</p>
+                                        <div class="d-flex" v-if="order.delivery_man_id">
+                                            <v-avatar>
+                                                <img
+                                                    :src="order.delivery_man.image ? '/storage/'+ order.delivery_man.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
+                                                    :alt="order.delivery_man.name"
+                                                >
+                                            </v-avatar>
+                                            <div class="ml-4">
+                                                <p class="m-0">{{order.delivery_man.name}}</p>
+                                                <p>{{order.delivery_man.username}}</p>
+                                                <p>{{order.delivery_man.phone_number}}</p>
+                                            </div>
+                                        </div>
+                                        <div v-else >
+                                            <p  class="ml-2 text-grey">
+                                                Not Assinged
+                                            </p>
+                                        </div>
+                                        <p> Ordered at : {{moment(order.created_at).calendar()}}</p>
+                                        <div>
+                                            Total Bill : ₱ {{order.total}}
+                                        </div>
+                                    </v-col>
+                                    <v-col cols="9">
+                                        <v-simple-table height="300" :class="order.status">
+                                            <template v-slot:default>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-left">
+                                                            Name
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Description
+                                                        </th>
+                                                         <th class="text-left">
+                                                            Product Price
+                                                        </th>
+                                                        <th class="text-left">
+                                                            For refill
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Quantity
+                                                        </th>
+                                                        <th class="text-left">
+                                                            Total Price
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        v-for="item in order.orders"
+                                                        :key="item.id"
+                                                    >
+                                                        <td>
+                                                           <v-avatar>
+                                                                <img
+                                                                    :src="item.product.image ? '/storage/'+ item.product.image : 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
+                                                                    :alt="item.product.name"
+                                                                >
+                                                            </v-avatar>
+                                                            {{ item.product.name }}
+                                                        </td>
+                                                        <td>{{ item.product.description }}</td>
+                                                        <td>₱ {{ item.product.price }}</td>
+                                                        <td>{{ item.product.is_refill ? "Yes" : "Container for sale" }}</td>
+                                                        <td>{{ item.quantity }}</td>
+                                                        <td>₱ {{ item.total_price }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </template>
+                                        </v-simple-table>
+                                    </v-col>
+                                </v-row>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -25,6 +179,7 @@
                 <v-container class="max-width">
                     <v-pagination
                     v-model="page"
+                    color="light-blue"
                     class="my-4"
                     :length="pageNumbers"
                     ></v-pagination>
@@ -41,8 +196,10 @@ export default {
         orders: [],
         page : 1,
         pageNumbers: 1,
-        filters : ['on-the-way','assinged-to-driver', 'pending','delivered','accepted','denied','all'],
-        active_filter : 'all'
+        date_pick: false,
+        status_filters : ['on-the-way','assinged-to-driver', 'pending','delivered','accepted','denied','all'],
+        status_filter : 'all',
+        date_filter: (new Date()).toISOString().split('T')[0]
     }),
     mounted () {
         this.initialize()
@@ -52,13 +209,19 @@ export default {
             let params = { 
                 page: this.page,
                 per_page: 10,
-                filter : this.active_filter,
+                status_filter : this.status_filter,
+                date_filter : this.date_filter
             } 
 
             this.$admin.get('/order/all', { params })
             .then(({data}) => {
-                this.orders = data;
-                 this.pageNumbers = data.last_page;
+                this.orders = data.data;
+
+                this.orders.forEach((order) => {
+                    order.orders = JSON.parse(order.orders)
+                })
+                this.page = data.current_page;
+                this.pageNumbers = data.last_page;
             });
         }
     },
@@ -66,13 +229,39 @@ export default {
         page (){
             this.initialize()
         },
-        active_filter() {
+        status_filter() {
             this.initialize()
-
-        }
+        },
+        date_filter() {
+            this.initialize()
+        },
     }
 
 
     
 }
 </script>
+
+<style lang="scss" scoped>
+.on-the-way{
+    background-color:rgb(233, 135, 151)!important;
+}
+.assinged-to-driver{
+    background-color: rgb(216, 166, 72)!important;
+}
+.pending{
+    background-color: rgb(192, 192, 56)!important;
+}
+.delivered{
+    background-color: rgb(51, 115, 130)!important;
+}
+.accepted{
+    background-color: rgb(64, 187, 64)!important;
+}
+.denied{
+    background-color: rgb(194, 66, 66)!important;
+}
+.status-box{
+    border-radius: 5%;
+}
+</style>

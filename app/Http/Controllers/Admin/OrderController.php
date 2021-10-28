@@ -12,8 +12,19 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $index = Order::query();
-        $per_page = $request->query('per_page') ? $request->query('per_page') : 10;
+        
+        if($request->query('status_filter')!="all"){
+            $index->where("status" ,$request->query('status_filter'));
+        }
+        else {
+            $index->where('status', '!=' , "denied");
+        }
 
-        return $index::where('parents')paginate($per_page);
+        if($request->query('date_filter')){
+            $index->whereDate("created_at" ,$request->query('date_filter'));
+        }
+        $index->orderBy('created_at', 'desc');
+
+        return $index->paginate(10);
     }
 }

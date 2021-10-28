@@ -50,7 +50,7 @@
                                 v-model="form.is_refill"
                             ></v-select>
                             <v-text-field
-                                label="Price*"
+                                label="*Price (₱)"
                                 type="number"
                                 required
                                 v-model="form.price"

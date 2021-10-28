@@ -77,7 +77,7 @@
           { text: "Product Name", value: "name" },
           { text: "Description", value: "description" },
           { text: "For Refill", value: "is_refill" },
-          { text: "Price", value: "price" },
+          { text: "Price (₱)", value: "price" },
           { text: "Actions", value: "actions" },
         ],
         addition_edition_dailog: false,

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryManController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Http\Request;
@@ -52,5 +53,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::put('/user/update/{user}',[UserController::class,'update']);
     Route::delete('/user/delete/{user}',[UserController::class,'delete']);
 
+    // ORDERS
+    Route::get('/order/all',[OrderController::class,'index']);
 
 });
