@@ -23,14 +23,14 @@
                         <v-btn
                             block
                             class="accepted text-white mt-2"
-                            @click="acceptOrder"
+                            @click="updateOrderStatus('accepted')"
                         >
                             Accept
                         </v-btn>
                         <v-btn
                             block
                             class="denied text-white mt-2"
-                            @click="deniedOrder"
+                            @click="updateOrderStatus('denied')"
                         >
                             Decline
                         </v-btn>
@@ -43,15 +43,22 @@
                             item-value="id"
                             label="Assign order to a delivery man"
                         ></v-select>
+                        <v-btn
+                            block
+                            class="accepted text-white mt-2"
+                            @click="setDeliveryMan"
+                        >
+                            Update
+                        </v-btn>
                     </div>
                     <div v-else-if="order.status == 'assigned-to-driver'">
-                        <label for=""> get </label>
+                        <!-- <label for="">Date</label> -->
                         <v-menu
-                            ref="time_picker"
-                            v-model="time_picker"
+                            ref="time_pick"
+                            v-model="time_pick"
                             :close-on-content-click="false"
                             :nudge-right="40"
-                            :return-value.sync="time"
+                            :return-value.sync="time_filter"
                             transition="scale-transition"
                             offset-y
                             max-width="290px"
@@ -59,8 +66,8 @@
                         >
                             <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                                v-model="time"
-                                label="Picker in menu"
+                                v-model="time_filter"
+                                label="Select time to deliver"
                                 prepend-icon="mdi-clock-time-four-outline"
                                 readonly
                                 v-bind="attrs"
@@ -68,10 +75,10 @@
                             ></v-text-field>
                             </template>
                             <v-time-picker
-                            v-if="time_picker"
-                            v-model="time"
+                            v-if="time_pick"
+                            v-model="time_filter"
                             full-width
-                            @click:minute="$refs.time_picker.save(time)"
+                            @click:minute="$refs.time_pick.save(time_filter)"
                             ></v-time-picker>
                         </v-menu>
                         <v-menu
@@ -85,7 +92,7 @@
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="date_filter"
-                                    label="Select "
+                                    label="Select date to deliver"
                                     prepend-icon="mdi-calendar"
                                     readonly
                                     color="light-blue"
@@ -98,13 +105,30 @@
                                 v-model="date_filter"
                                 @input="date_pick = false"
                             ></v-date-picker>
-                    </v-menu>  
-                    </div>
-                    <div v-else-if="order.status == 'on-the-way'">
-                        C
+                        </v-menu>  
+                        <v-btn
+                            block
+                            class="assigned-to-driver text-white mt-2"
+                            @click="setDateAndTimeToDeliver"
+                        >
+                            Update
+                        </v-btn>
                     </div>
                     <div v-else>
-                        Not A/B/C
+                        <v-btn
+                            block
+                            class="on-the-way text-white mt-2"
+                            @click="updateOrderStatus('on-the-way')"
+                        >
+                            ON THE WAY
+                        </v-btn>
+                        <v-btn
+                            block
+                            class="delivered text-white mt-2"
+                            @click="updateOrderStatus('delivered')"
+                        >
+                            DELIVERED
+                        </v-btn>
                     </div>
                 </v-col>
             </v-row>
@@ -142,6 +166,9 @@
         deliverMen: [],
         deliveryMan : null,
         date_filter: (new Date()).toISOString().split('T')[0],
+        time_filter: (new Date()).getHours()+ ':' + (new Date()).getMinutes(), 
+        date_pick: false,
+        time_pick: false,
 
     }),
     mounted(){
@@ -152,7 +179,31 @@
             this.$admin.get('/delivery-man/all').then(({data}) => {
                 this.deliverMen = data
             })
+        },
+        updateOrderStatus(status){
+            this.$admin.post('/order-status/'+this.order.id,{status:status}).then(({data}) => {
+                data
+                this.$emit('close')
+            })
+        },
+        setDateAndTimeToDeliver(){
+            this.$admin.post('/order-set-delivery-time-date/'+this.order.id,
+            {
+                time_filter:this.time_filter,
+                date_filter:this.date_filter
+            }).then(({data}) => {
+                data
+                this.$emit('close')
+            })
+        },
+        setDeliveryMan(){
+            this.$admin.post('/order-set-delivery-man/'+this.order.id,{delivery_man:this.deliveryMan}).then(({data}) => {
+                data
+                this.$emit('close')
+            })
         }
+       
+
     },
 
     computed : {

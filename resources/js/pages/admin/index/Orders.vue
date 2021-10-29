@@ -197,7 +197,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <OrderForm :order="order_to_update" :dialogState="status_dailog" @close="status_dailog = false" />
+        <OrderForm :order="order_to_update" :dialogState="status_dailog" @close="close" />
 
     </div>
 </template>
@@ -247,8 +247,9 @@ export default {
             this.order_to_update = JSON.parse(JSON.stringify(order))
             this.status_dailog = true
         },
-        updateOrderStatus(){
-
+        close(){
+            this.status_dailog = false
+            this.initialize()
         },
     },
     watch : {

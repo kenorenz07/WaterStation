@@ -55,5 +55,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
 
     // ORDERS
     Route::get('/order/all',[OrderController::class,'index']);
+    Route::post('/order-set-delivery-man/{order}',[OrderController::class,'updateDeliveryMan']);
+    Route::post('/order-set-delivery-time-date/{order}',[OrderController::class,'updateDateTimeDeliver']);
+    Route::post('/order-status/{order}',[OrderController::class,'updateStatus']);
 
 });

@@ -27,4 +27,27 @@ class OrderController extends Controller
 
         return $index->paginate(10);
     }
+
+    public function updateStatus(Order $order,Request $request)
+    {
+        return $order->update([
+            "status" => $request->status
+        ]);
+    }
+
+    public function updateDeliveryMan(Order $order,Request $request)
+    {
+        return $order->update([
+            "status" => "assigned-to-driver",
+            "delivery_man_id" => $request->delivery_man
+        ]);
+    }
+
+    public function updateDateTimeDeliver(Order $order,Request $request)
+    {
+        return $order->update([
+            "date_to_deliver" => $request->date_filter,
+            "time_to_deliver" => $request->time_filter,
+        ]);
+    }
 }
