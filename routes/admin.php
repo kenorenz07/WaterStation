@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryManController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -58,5 +59,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::post('/order-set-delivery-man/{order}',[OrderController::class,'updateDeliveryMan']);
     Route::post('/order-set-delivery-time-date/{order}',[OrderController::class,'updateDateTimeDeliver']);
     Route::post('/order-status/{order}',[OrderController::class,'updateStatus']);
+
+    // SALES
+    Route::get('/sales/all',[SaleController::class,'index']);
 
 });

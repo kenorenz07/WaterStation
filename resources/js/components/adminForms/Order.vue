@@ -51,7 +51,7 @@
                             Update
                         </v-btn>
                     </div>
-                    <div v-else-if="order.status == 'assigned-to-driver'">
+                    <div v-else-if="order.status != 'denied'">
                         <!-- <label for="">Date</label> -->
                         <v-menu
                             ref="time_pick"
@@ -111,10 +111,24 @@
                             class="assigned-to-driver text-white mt-2"
                             @click="setDateAndTimeToDeliver"
                         >
-                            Update
+                            SET TIME AND DATE OF DELIVERY
+                        </v-btn>
+                         <v-btn
+                            block
+                            class="on-the-way text-white mt-2"
+                            @click="updateOrderStatus('on-the-way')"
+                        >
+                            SET ON THE WAY
+                        </v-btn>
+                        <v-btn
+                            block
+                            class="delivered text-white mt-2"
+                            @click="updateOrderStatus('delivered')"
+                        >
+                            UPDATE TO DELIVERED
                         </v-btn>
                     </div>
-                    <div v-else>
+                    <!-- <div v-else>
                         <v-btn
                             block
                             class="on-the-way text-white mt-2"
@@ -129,7 +143,7 @@
                         >
                             DELIVERED
                         </v-btn>
-                    </div>
+                    </div> -->
                 </v-col>
             </v-row>
           </v-container>

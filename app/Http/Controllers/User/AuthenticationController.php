@@ -12,6 +12,20 @@ class AuthenticationController extends Controller
     {
         // $this->middleware('guest:user')->except('logout');
     }
+    
+    public function uploadImage($image)
+    {
+        $exploded_base64 = explode(',', $image);
+        $decoded_base64  = base64_decode($exploded_base64[1]);
+        $extention = $this->string_between_two_string($exploded_base64[0], '/', ';');
+        
+        $fileName = 'cus_'.time().'.'.$extention;
+        $path = storage_path('app/public/').$fileName;
+    
+        file_put_contents($path,$decoded_base64);   
+        
+        return $fileName;
+    }
 
     public function register(Request $request)
     {
@@ -22,10 +36,18 @@ class AuthenticationController extends Controller
             'password' => 'required',
         ]);
 
+        
+        $image_req = str_contains($request->image,'base64');
+
+        if($image_req){
+            $fileName = $this->uploadImage($request->image);
+        }
+
         return User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'image' => $image_req ? $fileName : null ,
             'phone_number' => $request->phone_number,
         ]);
     }
