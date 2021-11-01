@@ -10,6 +10,7 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = ["review","user_id"];
+    protected $with = ["user"];
     public function user(){
         return $this->belongsTo(User::class);
     }

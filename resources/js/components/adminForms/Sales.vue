@@ -3,7 +3,7 @@
     <v-dialog
       v-model="saleDialog"
       persistent
-      max-width="00px"
+      max-width="900px"
     >
     
       <v-card>
@@ -12,11 +12,50 @@
         </v-card-title>
          <v-card-text>
             <v-container>
-
                 <v-row class="mt-1">
-                   
+                    <v-col cols="3">
+                        <p> Customer Details</p>
+                        <div class="d-flex ml-4">
+                            <v-avatar>
+                                <img
+                                    :src="order.user.image ? '/storage/'+ order.user.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
+                                    :alt="order.user.name"
+                                >
+                            </v-avatar>
+                            <div class="ml-4">
+                                <p class="m-0">{{order.user.name}}</p>
+                                <p>{{order.user.email}}</p>
+                                <p>{{order.user.phone_number}}</p>
+                            </div>
+                        </div>
+                        <p> Delivery Man Details</p>
+                        <div class="d-flex" v-if="order.delivery_man_id">
+                            <v-avatar>
+                                <img
+                                    :src="order.delivery_man.image ? '/storage/'+ order.delivery_man.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
+                                    :alt="order.delivery_man.name"
+                                >
+                            </v-avatar>
+                            <div class="ml-4">
+                                <p class="m-0">{{order.delivery_man.name}}</p>
+                                <p>{{order.delivery_man.username}}</p>
+                                <p>{{order.delivery_man.phone_number}}</p>
+                            </div>
+                        </div>
+                        <div v-else >
+                            <p  class="ml-2 text-grey">
+                                Not Assigned
+                            </p>
+                        </div>
+                        <p> Ordered at : {{moment(order.created_at).calendar()}}</p>
+                        <p> Date Delivered : {{order.date_delivered ? order.date_delivered : "Not Defined" }}</p>
+                        <p> Time Delivered : {{order.time_delivered ? order.time_delivered : "Not Defined" }}</p>
+                        <div>
+                            Total Bill : ₱ {{order.total}}
+                        </div>
+                    </v-col>
                     <v-col cols="9">
-                        <v-simple-table height="440" >
+                        <v-simple-table >
                             <template v-slot:default>
                                 <thead>
                                     <tr>

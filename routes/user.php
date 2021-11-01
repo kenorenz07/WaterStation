@@ -4,6 +4,7 @@ use App\Http\Controllers\User\AuthenticationController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,5 +35,10 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user']
 
     Route::post('/place-order/',[OrderController::class,'placeOrder']);
     Route::get('/order/all/',[OrderController::class,'getAllOrdersOfUser']);
+
+    Route::get('reviews',[ReviewController::class,'index']);
+    Route::post('reviews/add',[ReviewController::class,'create']);
+    Route::put('reviews/update/{review}',[ReviewController::class,'update']);
+    Route::delete('reviews/delete/{review}',[ReviewController::class,'delete']);
 
 });

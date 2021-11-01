@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryManController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Http\Request;
@@ -62,5 +63,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
 
     // SALES
     Route::get('/sales/all',[SaleController::class,'index']);
+
+    // REVIEWS 
+    Route::get('/reviews/all',[ReviewController::class,'index']);
 
 });

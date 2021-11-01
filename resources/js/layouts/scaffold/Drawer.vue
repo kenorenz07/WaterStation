@@ -59,6 +59,7 @@
           { title: 'Customers', icon: 'mdi-account-group', route: '/customers' },
           { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
           { title: 'Sales', icon: 'mdi-point-of-sale', route: '/sales' },
+          { title: 'Reviews', icon: 'mdi-message-draw', route: '/reviews' },
         ],
         admin_detials: {},
         route_open: ''

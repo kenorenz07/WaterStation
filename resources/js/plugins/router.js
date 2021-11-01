@@ -11,6 +11,7 @@ import DeliveryMen from '../pages/admin/index/DeliveryMen.vue';
 import Products from '../pages/admin/index/Products.vue';
 import Orders from '../pages/admin/index/Orders.vue';
 import Sales from '../pages/admin/index/Sales.vue';
+import Reviews from '../pages/admin/index/Review.vue';
 
 import Customer from '../pages/admin/view/Customer.vue';
 import DeliveryMan from '../pages/admin/view/DeliveryMan.vue';
@@ -63,6 +64,11 @@ const router = new VueRouter({
                     path: '/sales',
                     name: 'sales',
                     component: Sales,
+                },
+                {
+                    path: '/reviews',
+                    name: 'reviews',
+                    component: Reviews,
                 },
 
                 // view
