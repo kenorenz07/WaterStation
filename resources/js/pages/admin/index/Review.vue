@@ -1,5 +1,6 @@
 <template>
-    <v-container>
+    <div>
+        <v-container>
             <v-simple-table >
                 <template v-slot:default>
                     <thead>
@@ -8,10 +9,10 @@
                                 Customer Name
                             </th>
                             <th class="text-left">
-                                Review
+                                Review At
                             </th>
                             <th class="text-left">
-                                Review At
+                                Actions
                             </th>
                         </tr>
                     </thead>
@@ -21,19 +22,36 @@
                             :key="review.id"
                         >
                             <td>{{ review.user.name }}</td>
-                            <td>{{ review.review }}</td>
-                            <td>{{ moment(review.created_at).calendar() }}</td>                           
+                            <td>{{ moment(review.created_at).calendar() }}</td>   
+                            <td>
+                                <v-icon
+                                    class="mr-2"
+                                    @click="viewReview(review)"
+                                >
+                                    mdi-eye
+                                </v-icon>
+                            </td>                        
                         </tr>
                     </tbody>
                 </template>
             </v-simple-table>
-    </v-container>
+        </v-container>
+        <ReviewForm :review="review" :dialogState="review_dialog" @close="review_dialog = false" @reload="getReview"/>
+
+    </div>
 </template>
 <script>
+import ReviewForm from '../../../components/adminForms/Review.vue'
+
 export default {
     data : () => ({
-        reviews: []
+        reviews: [],
+        review: {},
+        review_dialog: false,
     }),
+    components : {
+        ReviewForm
+    },
     mounted () {
         this.initialize()
     },
@@ -41,6 +59,16 @@ export default {
         initialize(){
             this.$admin.get('/reviews/all').then(({data}) => {
                 this.reviews = data;
+            });
+        },
+        viewReview(review) {
+            this.review = review
+            this.review_dialog = true
+        },
+        getReview(){
+            this.$admin.get('/review/'+this.review.id).then(({data}) => {
+                this.review = data
+                this.review_dialog = true
             });
         }
     }

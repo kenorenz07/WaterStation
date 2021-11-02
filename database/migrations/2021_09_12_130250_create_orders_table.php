@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->date('date_to_deliver')->nullable();
             $table->time('time_to_deliver')->nullable();
             $table->float('total', 8, 2);
-            $table->enum('status', ['on-the-way','assinged-to-driver', 'pending','delivered','accepted','denied']);
+            $table->enum('status', ['on-the-way','assigned-to-driver', 'pending','delivered','accepted','denied']);
             $table->timestamps();
         });
     }

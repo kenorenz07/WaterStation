@@ -177,7 +177,7 @@
                         opacity: 0.2
                     },
                     toolbar: {
-                        show: false
+                        show: true
                     }
                 },
                 colors: ['#77B6EA', '#545454'],
@@ -205,9 +205,9 @@
                     }
                 },
                 yaxis: {
-                title: {
-                    text: 'Sales'
-                },
+                    title: {
+                        text: 'Sales'
+                    },
                     min: 5,
                     max: 60
                 },
@@ -230,9 +230,18 @@
                     this.statistics = data
                     this.series = [{
                         name: "Quantity",
-                        data: [19,20,42,20,43,10,15,10,16,10,54,10]
+                        data: data.sales[0]
                         // data: data.sales
                     }]
+                    this.chartOptions ={
+                        yaxis :{
+                            title: {
+                                text: 'Sales'
+                            },
+                            min: data.sales[1],
+                            max: data.sales[2]
+                        }
+                    }
 
                     console.log(data,'inamo',this.series[0].data)
                 })

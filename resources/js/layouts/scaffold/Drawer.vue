@@ -60,6 +60,7 @@
           { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
           { title: 'Sales', icon: 'mdi-point-of-sale', route: '/sales' },
           { title: 'Reviews', icon: 'mdi-message-draw', route: '/reviews' },
+          { title: 'Announcements', icon: 'mdi-bullhorn', route: '/announcements' },
         ],
         admin_detials: {},
         route_open: ''

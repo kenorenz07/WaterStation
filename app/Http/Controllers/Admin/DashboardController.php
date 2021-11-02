@@ -16,17 +16,19 @@ class DashboardController extends Controller
     {
         if(!$year) $year = Carbon::now()->year;
         
+        $months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+
         $sales = [];
 
-        for($i = 1;$i <= 12;$i++){
-            $sales[] = Sale::whereYear('created_at',$year)->whereMonth('created_at', $i)->count();
+        foreach($months as $month){
+            $sales[] = Sale::query()->whereYear('created_at',$year)->whereMonth('created_at',$month)->count();
         }
 
         return [
             'customers' => User::all()->count(),
             'products' => Product::all()->count(),
             'orders' => Order::whereMonth('created_at', Carbon::now()->month)->count(),
-            'sales' => $sales
+            'sales' => [$sales,min($sales),max($sales)]
         ];
     }
 }

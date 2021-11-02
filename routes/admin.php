@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DeliveryManController;
@@ -66,5 +67,14 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
 
     // REVIEWS 
     Route::get('/reviews/all',[ReviewController::class,'index']);
+    Route::get('/review/{review}',[ReviewController::class,'getReview']);
+    Route::post('/review/add-reply/{review}',[ReviewController::class,'addReply']);
+    Route::put('/review/update-reply/{reply}',[ReviewController::class,'updateReply']);
+    Route::delete('/review/delete-reply/{reply}',[ReviewController::class,'deleteReply']);
 
+     // CUSTOMERS    
+     Route::get('/announcement/all',[AnnouncementController::class,'index']);
+     Route::post('/announcement/create',[AnnouncementController::class,'store']);
+     Route::put('/announcement/update/{announcement}',[AnnouncementController::class,'update']);
+     Route::delete('/announcement/delete/{announcement}',[AnnouncementController::class,'delete']);
 });

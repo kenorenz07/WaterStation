@@ -138,9 +138,6 @@
           }
         },
     },
-    mouted(){
-        
-    },
     computed : {
         deliveryManDialog(){
             return this.dialogState
