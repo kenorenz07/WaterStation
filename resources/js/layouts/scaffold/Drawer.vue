@@ -53,9 +53,9 @@
     data () {
       return {
         items: [
+          { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
           { title: 'Announcements', icon: 'mdi-bullhorn', route: '/announcements' },
           { title: 'Customers', icon: 'mdi-account-group', route: '/customers' },
-          { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
           { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
           { title: 'Orders', icon: 'mdi-cart', route: '/orders' },
           { title: 'Products', icon: 'mdi-cash-100', route: '/products' },
