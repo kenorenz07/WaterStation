@@ -243,7 +243,6 @@
                         }
                     }
 
-                    console.log(data,'inamo',this.series[0].data)
                 })
             },
             reserve () {

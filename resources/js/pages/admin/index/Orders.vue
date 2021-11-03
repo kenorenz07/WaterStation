@@ -3,6 +3,9 @@
         <v-container>
             <div class="d-flex justify-space-between mb-6" >
                 <div>
+                    <h1> ORDERS </h1>
+                </div>
+                <div>
                     <v-menu
                         v-model="date_pick"
                         :close-on-content-click="false"
@@ -23,15 +26,13 @@
                         ></v-text-field>
                         </template>
                         <v-date-picker
-                         color="light-blue"
+                            color="light-blue"
                             v-model="date_filter"
                             @input="date_pick = false"
                         ></v-date-picker>
                     </v-menu>  
                 </div>
-                <div>
-                    <h1> ORDERS </h1>
-                </div>
+              
                 <div>
                     <v-select
                         v-model="status_filter"
@@ -43,7 +44,11 @@
                         prepend-icon="mdi-filter-variant"
                         single-line
                     ></v-select>
+                 
                 </div>
+                   <v-btn @click="generateDialog = true">
+                        Generate Report
+                    </v-btn>
             </div>
             <v-row >
                 <v-col cols='12'>
@@ -198,7 +203,72 @@
             </v-row>
         </v-container>
         <OrderForm :order="order_to_update" :dialogState="status_dailog" @close="close" />
-
+        <v-dialog
+            v-model="generateDialog"
+            persistent
+            max-width="600px"
+            >
+            
+            <v-card>
+                <v-card-title>
+                    <span class="text-h5">Select Filter for report</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-row>
+                            <v-col      
+                                cols="7"
+                                sm="7"
+                                md="7"
+                            >   
+                               
+                                <label for="">Filter start to end date</label>
+                                <div>
+                                    <v-date-picker
+                                        color="light-blue"
+                                        @input="generate_date_pick = false"
+                                        v-model="generate_dates"
+                                        range
+                                    ></v-date-picker>
+                                </div>
+                            </v-col>
+                            <v-col cols="5">
+                                 <div>
+                                    <label for="">Filter status</label>
+                                    <v-select
+                                        v-model="generate_status_filter"
+                                        :items="status_filters"
+                                        menu-props="auto"
+                                        label="Status Filter"
+                                        color="light-blue"
+                                        hide-details
+                                        prepend-icon="mdi-filter-variant"
+                                        single-line
+                                    ></v-select>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="generateDialog = false"
+                    >
+                        Close
+                    </v-btn>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="downloadPDF"
+                    >
+                        Generate
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -216,12 +286,22 @@ export default {
         status_dailog : false,
         order_to_update : {},
 
+        generateDialog: false,
+        generate_date_pick: false,
+        generate_status_filter: 'all',
+        generate_dates: [(new Date()).toISOString().split('T')[0],(new Date(new Date().getTime()+(14*24*60*60*1000))).toISOString().split('T')[0]],
+
     }),
     components : {
         OrderForm,
     },
     mounted () {
         this.initialize()
+    },
+    computed: {
+    dateRangeText () {
+        return this.generate_dates.join(' ~ ')
+      },
     },
     methods : {
         initialize(){
@@ -251,6 +331,20 @@ export default {
             this.status_dailog = false
             this.initialize()
         },
+        downloadPDF()
+        {
+            this.$admin.get('/order/generate-pdf/'+this.generate_dates[0]+'/'+this.generate_dates[1]+'/'+this.generate_status_filter,{
+                responseType: 'arraybuffer'
+            })
+            .then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'ORDERREPORT'+this.generate_dates[0]+'-'+this.generate_dates[1]+'.pdf');
+                document.body.appendChild(link);
+                link.click();
+            })
+        }
     },
     watch : {
         page (){

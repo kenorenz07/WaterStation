@@ -61,9 +61,11 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::post('/order-set-delivery-man/{order}',[OrderController::class,'updateDeliveryMan']);
     Route::post('/order-set-delivery-time-date/{order}',[OrderController::class,'updateDateTimeDeliver']);
     Route::post('/order-status/{order}',[OrderController::class,'updateStatus']);
+    Route::get('/order/generate-pdf/{start}/{end}/{status}', [OrderController::class, 'createPDF']);
 
     // SALES
     Route::get('/sales/all',[SaleController::class,'index']);
+    Route::get('/sales/generate-pdf/{start}/{end}', [SaleController::class, 'createPDF']);
 
     // REVIEWS 
     Route::get('/reviews/all',[ReviewController::class,'index']);
@@ -77,4 +79,5 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
      Route::post('/announcement/create',[AnnouncementController::class,'store']);
      Route::put('/announcement/update/{announcement}',[AnnouncementController::class,'update']);
      Route::delete('/announcement/delete/{announcement}',[AnnouncementController::class,'delete']);
+     
 });

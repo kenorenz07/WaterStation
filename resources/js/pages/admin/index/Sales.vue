@@ -34,6 +34,9 @@
                 ></v-date-picker>
             </v-menu>  
         </div>
+        <v-btn class="ml-2" @click="generateDialog = true">
+            Generate Report
+        </v-btn>
       </v-card-title>
       <v-data-table
         :footer-props="footerProps"
@@ -64,7 +67,53 @@
       </v-data-table>
     </v-card>
     <SalesForm :order="sales_to_show" :dialogState="sales_dialog" @close="sales_dialog = false" />
-
+       <v-dialog
+            v-model="generateDialog"
+            persistent
+            max-width="400px"
+            >
+            
+            <v-card>
+                <v-card-title>
+                    <span class="text-h5">Select Filter for report</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-row>
+                            <v-col >   
+                               
+                                <label for="">Filter start to end date</label>
+                                <div>
+                                    <v-date-picker
+                                        color="light-blue"
+                                        @input="generate_date_pick = false"
+                                        v-model="generate_dates"
+                                        range
+                                    ></v-date-picker>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="generateDialog = false"
+                    >
+                        Close
+                    </v-btn>
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="downloadPDF"
+                    >
+                        Generate
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
 </div>
 </template>
 
@@ -98,7 +147,11 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
         ],
         date_pick: false,
         date_filter: (new Date()).toISOString().split('T')[0],
-        sales_to_show : {}
+        sales_to_show : {},
+
+        generateDialog: false,
+        generate_date_pick: false,
+        generate_dates: [(new Date()).toISOString().split('T')[0],(new Date(new Date().getTime()+(14*24*60*60*1000))).toISOString().split('T')[0]],
       };
   },
   //this one will populate new data set when user changes current page. 
@@ -150,7 +203,25 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
         }
         this.sales_to_show.orders = JSON.parse(sales.orders)
         this.sales_dialog = true
-    }
+    },
+      downloadPDF()
+      {
+          this.$admin.get('/sales/generate-pdf/'+this.generate_dates[0]+'/'+this.generate_dates[1],{
+              responseType: 'arraybuffer'
+          })
+          .then(response => {
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', 'SALESREPORT'+this.generate_dates[0]+'-'+this.generate_dates[1]+'.pdf');
+              document.body.appendChild(link);
+              link.click();
+              // let blob = new Blob([response.data], { type: 'application/pdf' }),
+              // url = window.URL.createObjectURL(blob)
+
+              // window.open(url) // Mostly the same, I was just experimenting with different approaches, tried link.click, iframe and other solutions
+        })
+      }
   },
   
   //this will trigger in the onReady State

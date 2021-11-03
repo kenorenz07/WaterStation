@@ -53,14 +53,14 @@
     data () {
       return {
         items: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
-          { title: 'Products', icon: 'mdi-cash-100', route: '/products' },
-          { title: 'Orders', icon: 'mdi-cart', route: '/orders' },
-          { title: 'Customers', icon: 'mdi-account-group', route: '/customers' },
-          { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
-          { title: 'Sales', icon: 'mdi-point-of-sale', route: '/sales' },
-          { title: 'Reviews', icon: 'mdi-message-draw', route: '/reviews' },
           { title: 'Announcements', icon: 'mdi-bullhorn', route: '/announcements' },
+          { title: 'Customers', icon: 'mdi-account-group', route: '/customers' },
+          { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
+          { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
+          { title: 'Orders', icon: 'mdi-cart', route: '/orders' },
+          { title: 'Products', icon: 'mdi-cash-100', route: '/products' },
+          { title: 'Reviews', icon: 'mdi-message-draw', route: '/reviews' },
+          { title: 'Sales', icon: 'mdi-point-of-sale', route: '/sales' },
         ],
         admin_detials: {},
         route_open: ''
