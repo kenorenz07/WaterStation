@@ -11,7 +11,7 @@ class ReviewController extends Controller
 
     public function index(Request $request)
     {
-        return $request->user()->reviews;
+        return $request->user()->reviews()->get();
     }
 
     public function create(Request $request)
