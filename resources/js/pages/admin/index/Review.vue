@@ -66,6 +66,7 @@ export default {
             this.review_dialog = true
         },
         getReview(){
+            this.initialize()
             this.$admin.get('/review/'+this.review.id).then(({data}) => {
                 this.review = data
                 this.review_dialog = true

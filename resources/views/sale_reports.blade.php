@@ -18,7 +18,7 @@
                 <th scope="col">Date delivered</th>
                 <th scope="col">Time delivered</th>
                 <th scope="col">Total</th>
-                <th scope="col">Saled at</th>
+                <th scope="col">Sold at</th>
             </tr>
         </thead>
         <tbody>

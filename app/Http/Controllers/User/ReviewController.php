@@ -30,6 +30,7 @@ class ReviewController extends Controller
 
     public function delete(Review $review)
     {
+        $review->replies()->delete();
         return $review->delete();
     }
 
