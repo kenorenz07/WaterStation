@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DeliveryMan\AuthenticationController;
+use App\Http\Controllers\DeliveryMan\OrderController;
+use App\Http\Controllers\DeliveryMan\SaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +26,12 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:delivery_man-api','scope
 
     Route::post('logout',[AuthenticationController::class, 'logout']);
 
+
+    Route::get('/order/all/',[OrderController::class,'getAll']);
+    Route::get('/order/status/{order}',[OrderController::class,'updateStatus']);
+    Route::post('/order-set-delivery-time-date/{order}',[OrderController::class,'updateDateTimeDeliver']);
+
+    
+    Route::get('/sale/all/',[SaleController::class,'getAll']);
 
 });

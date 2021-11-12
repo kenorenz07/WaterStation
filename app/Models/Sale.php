@@ -18,6 +18,8 @@ class Sale extends Model
         'time_delivered',
     ];
 
+    protected $with = ['user','delivery_man'];
+
     public function user(){
         return $this->belongsTo(User::class);
     }

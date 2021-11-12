@@ -11,7 +11,7 @@ class SaleController extends Controller
 {
     public function index(Request $request)
     {
-        $index = Sale::query()->with('user','delivery_man');
+        $index = Sale::query();
         
         if($request->query('date_filter')){
             $index->whereDate("created_at" ,$request->query('date_filter'));
