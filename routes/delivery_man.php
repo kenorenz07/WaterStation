@@ -28,7 +28,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:delivery_man-api','scope
 
 
     Route::get('/order/all/',[OrderController::class,'getAll']);
-    Route::get('/order/status/{order}',[OrderController::class,'updateStatus']);
+    Route::post('/order/status/{order}',[OrderController::class,'updateStatus']);
     Route::post('/order-set-delivery-time-date/{order}',[OrderController::class,'updateDateTimeDeliver']);
 
     
