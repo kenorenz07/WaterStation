@@ -9,7 +9,10 @@
                                 Customer Name
                             </th>
                             <th class="text-left">
-                                Review At
+                                Review/Created At
+                            </th>
+                            <th class="text-left">
+                                Updated At
                             </th>
                             <th class="text-left">
                                 Actions
@@ -23,6 +26,7 @@
                         >
                             <td>{{ review.user.name }}</td>
                             <td>{{ moment(review.created_at).calendar() }}</td>   
+                            <td>{{ moment(review.updated_at).calendar() }}</td>   
                             <td>
                                 <v-icon
                                     class="mr-2"

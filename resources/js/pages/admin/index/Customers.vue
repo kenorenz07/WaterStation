@@ -37,6 +37,12 @@
                 </v-icon>
             </v-avatar>
         </template>
+        <template v-slot:item.created_at="{ item }">
+          {{moment(item.created_at).format("MMM Do YYYY")  }}
+        </template>
+        <template v-slot:item.updated_at="{ item }">
+          {{moment(item.updated_at).format("MMM Do YYYY")  }}
+        </template>
         <template v-slot:item.actions="{ item }">
           <v-icon
             class="mr-2"
@@ -81,6 +87,8 @@
             { text: "Name", value: "name" },
             { text: "Email", value: "email" },
             { text: "Phone Number", value: "phone_number" },
+            { text: "Created At", value: "created_at" },
+            { text: "Updated At", value: "updated_at" },
             { text: "Actions", value: "actions" },
         ],
         addition_edition_dailog: false,

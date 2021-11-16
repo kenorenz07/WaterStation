@@ -138,6 +138,15 @@
         <v-card
             class="mx-5 my-5"
         >
+            <div>
+                <v-spacer></v-spacer>
+                <v-select
+                    :items="years"
+                    v-model="year"
+                    filled
+                    label="Select Year"
+                ></v-select>
+            </div>        
             <template slot="progress">
                 <v-progress-linear
                     color="light-blue accent-2"
@@ -156,6 +165,7 @@
     export default {
         data : () => ({
             year: new Date().getFullYear() ,
+            years: [],
             statistics: {},
             loading: false,
             series: [
@@ -220,7 +230,21 @@
                 }
             },
         }),
+        watch : {
+            year(val){
+                this.getStatictics()
+            }
+        },
         created() {
+            var max = new Date().getFullYear()
+            var min = max - 15
+            var years = []
+
+            for (var i = max; i >= min; i--) {
+                years.push(i)
+            }
+
+            this.years= years
             this.getStatictics()
         },
         methods: {

@@ -30,7 +30,9 @@
                                     {{deliver_man.name}}
                                 </v-list-item-title>
                                 <v-list-item-subtitle>Username: {{deliver_man.username}}</v-list-item-subtitle>
-                                <v-list-item-subtitle>Orders taken :</v-list-item-subtitle>
+                                <v-list-item-subtitle>Created At: {{moment(deliver_man.created_at).format("MMM Do YYYY") }}</v-list-item-subtitle>
+                                <v-list-item-subtitle>Updated at : {{moment(deliver_man.created_at).format("MMM Do YYYY") }}</v-list-item-subtitle>
+  
                             </v-list-item-content>
 
                             <v-list-item-avatar
