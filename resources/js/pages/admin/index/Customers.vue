@@ -51,7 +51,7 @@
             mdi-pencil
           </v-icon>
           <v-icon
-            @click="deleteUser(item)"
+            @click="confirmDialog = true,deletion_id = item.id"
 
           >
             mdi-delete
@@ -60,17 +60,21 @@
       </v-data-table>
     </v-card>
     <UserForm :form="userForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveUser()" />
+    <Confirmation :dialogState="confirmDialog" @close="confirmDialog = false" @confirm="deleteUser"/>
 
 </div>
 </template>
 <script>
+  import Confirmation from '../../../components/Confirm.vue'
   import UserForm from '../../../components/adminForms/Customer.vue'
   export default {
     components: {
-      UserForm
+      UserForm,Confirmation
     },
     data() {
       return {
+        confirmDialog:false,
+        deletion_id: null,
         page: 0,
         total: 0,
         numberOfPages: 0,
@@ -98,6 +102,9 @@
           email: '',
           phone_number: '',
           password: '',
+          purok : '',
+          brgy : '',
+          additional_address : '',
           image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
       };
@@ -115,6 +122,9 @@
                 email: '',
                 phone_number: '',
                 password: '',
+                purok : '',
+                brgy : '',
+                additional_address : '',
                 image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
             this.loading = true;
@@ -140,6 +150,9 @@
                 email: '',
                 phone_number: '',
                 password: '',
+                purok : '',
+                brgy : '',
+                additional_address : '',
                 image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
         this.addition_edition_dailog = true
@@ -150,6 +163,9 @@
                 name:user.name,
                 email:user.email ,
                 phone_number:user.phone_number ,
+                purok : user.purok,
+                brgy : user.brgy,
+                additional_address : user.additional_address,
                 image: '/storage/'+user.image,
             }
             this.addition_edition_dailog = true
@@ -166,9 +182,14 @@
                 })
             }
         },
-        deleteUser(user){
-            this.$admin.delete('/user/delete/'+ user.id).then(({data}) => {
+        deleteUser(){
+            this.confirmDialog = false
+            this.$admin.delete('/user/delete/'+ this.deletion_id).then(({data}) => {
+                if(data.error) {
+                  alert(data.error);
+                }
                 this.initialize() 
+                this.deletion_id = null
             })
         }
     },  

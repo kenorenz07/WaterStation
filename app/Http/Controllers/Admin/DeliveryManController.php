@@ -92,6 +92,7 @@ class DeliveryManController extends Controller
         $delivery_man->name = $request->name;
         $delivery_man->username = $request->username;
         $delivery_man->phone_number = $request->phone_number;
+        $delivery_man->password = $request->password ? bcrypt($request->password) : $delivery_man->password ;
     
         $delivery_man->save();
 
@@ -106,6 +107,9 @@ class DeliveryManController extends Controller
         }
 
         $delivery_man->orders()->update([
+            'delivery_man_id' => null
+        ]);
+        $delivery_man->sales()->update([
             'delivery_man_id' => null
         ]);
 

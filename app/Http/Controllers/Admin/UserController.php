@@ -54,6 +54,9 @@ class UserController extends Controller
             'email' => 'required',
             'phone_number' => 'required',
             'password' => 'required',
+            'purok'=> 'required',
+            'brgy'=> 'required',
+            'additional_address'=> 'required'
         ]);
 
         $image_req = str_contains($request->image,'base64');
@@ -68,6 +71,9 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'phone_number' => $request->phone_number,
             'image' => $image_req ? $fileName : null ,
+            'purok'=> $request->purok,
+            'brgy'=> $request->brgy,
+            'additional_address'=> $request->additional_address
         ]);
 
         return $created;
@@ -80,6 +86,9 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
             'phone_number' => 'required',
+            'purok'=> 'required',
+            'brgy'=> 'required',
+            'additional_address'=> 'required'
         ]);
 
         if(str_contains($request->image,'base64')){
@@ -93,6 +102,10 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
+        $user->password = $request->password ? bcrypt($request->password) : $user->password ;
+        $user->purok = $request->purok;
+        $user->brgy = $request->brgy;
+        $user->additional_address = $request->additional_address;
 
         $user->save();
 
@@ -103,6 +116,9 @@ class UserController extends Controller
     {
         if($user->image){
             Storage::delete('app/public/updloads/'.$user->image);
+        }
+        if($user->orders()->count() > 0 && $user->sales()->count() > 0 && $user->reviews()->count() > 0 && $user->carts()->count() > 0){
+            return ["error" =>"User is connected to orders,sales,reviews or carts. Cannot be deleted"];
         }
 
         $user->delete();

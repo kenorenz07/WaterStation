@@ -42,7 +42,7 @@
                                     </v-icon>
                                     <v-icon
                                         class="mr-2"
-                                        @click="deleteAnnouncement(announcement)"
+                                        @click="confirmDialog = true,deletion_id = announcement.id"
                                     >
                                         mdi-delete
                                     </v-icon>
@@ -54,10 +54,12 @@
             </v-container>
         </v-card>
         <AnnouncementForm :announcement="announcement" :dialogState="announcement_dialog" @close="announcement_dialog = false" @save="saveAnnouncement"/>
+        <Confirmation :dialogState="confirmDialog" @close="confirmDialog = false" @confirm="deleteAnnouncement"/>
 
     </div>
 </template>
 <script>
+import Confirmation from '../../../components/Confirm.vue'
 import AnnouncementForm from '../../../components/adminForms/Announcement.vue'
 
 export default {
@@ -65,9 +67,12 @@ export default {
         announcements: [],
         announcement: {},
         announcement_dialog: false,
+        confirmDialog: false,
+        deletion_id : null,
     }),
     components : {
-        AnnouncementForm
+        AnnouncementForm,
+        Confirmation
     },
     mounted () {
         this.initialize()
@@ -95,10 +100,11 @@ export default {
             }
             this.announcement_dialog = false
         },
-        deleteAnnouncement(announcement){
-            console.log('gsgsgs')
-            this.$admin.delete('/announcement/delete/'+ announcement.id).then(({data}) => {
+        deleteAnnouncement(){
+            this.confirmDialog = false
+            this.$admin.delete('/announcement/delete/'+ this.deletion_id ).then(({data}) => {
                 this.initialize()
+                this.deletion_id = null
             });
         },
     }

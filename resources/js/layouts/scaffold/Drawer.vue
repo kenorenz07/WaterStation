@@ -38,20 +38,27 @@
       </v-list>
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block @click="logoutAdmin">
+          <v-btn block @click="confirmDialog = true">
             Logout
           </v-btn>
         </div>
       </template>
+      <Confirmation :dialogState="confirmDialog" @close="confirmDialog = false" @confirm="logoutAdmin"/>
+
     </v-navigation-drawer>
 </template>
 <script>
+import Confirmation from '../../components/Confirm.vue'
   export default {
     props : {
         is_open: Boolean
     },
+    components : {
+      Confirmation
+    },
     data () {
       return {
+        confirmDialog: false,
         items: [
           { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
           { title: 'Announcements', icon: 'mdi-bullhorn', route: '/announcements' },

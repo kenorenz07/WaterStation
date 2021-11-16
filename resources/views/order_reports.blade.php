@@ -8,6 +8,7 @@
 <body>
     <h1>Order Reports</h1>
     <p></p>
+    <h3 class="text-left">GRAND TOTAL : {{"PHP ".$grandtotal}}</h3>
     <table class="table table-bordered mb-5">
         <thead>
             <tr class="table-danger">

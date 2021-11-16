@@ -8,6 +8,7 @@ use App\Models\DeliveryMan;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,9 @@ class DatabaseSeeder extends Seeder
             "name" => "User 1",
             "email" => "user1@gmail.com",
             "phone_number" => "08928663354",
+            "purok" => "purok 2",
+            "brgy" => "brgy 2",
+            "additional_address" => "additional_address 2",
             "password" => bcrypt(123123),
         ]);
 
@@ -29,6 +33,9 @@ class DatabaseSeeder extends Seeder
             "name" => "keno_erenz",
             "email" => "keno@renz.com",
             "phone_number" => "08928663354",
+            "purok" => "purok 1",
+            "brgy" => "brgy 1",
+            "additional_address" => "additional_address 1",
             "password" => bcrypt(123123123),
         ]);
         Admin::create([
@@ -51,7 +58,9 @@ class DatabaseSeeder extends Seeder
                 "description" => "size 1x".$i
             ]);
         }
-
+        Artisan::call('passport:install');
+        Artisan::call('storage:link');
+        Artisan::call('key:generate');
         // \App\Models\User::factory(10)->create();
     }
 }

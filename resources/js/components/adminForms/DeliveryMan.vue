@@ -35,7 +35,6 @@
                                 v-model="form.username"
                             ></v-text-field>
                              <v-text-field
-                                v-if="form.id == '' || form.id == null"
                                 label="Password*"
                                 required
                                 v-model="form.password"

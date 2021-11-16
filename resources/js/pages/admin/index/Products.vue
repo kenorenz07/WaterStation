@@ -48,7 +48,7 @@
             mdi-pencil
           </v-icon>
           <v-icon
-            @click="deleteProduct(item)"
+            @click="confirmDialog = true,deletion_id = item.id"
 
           >
             mdi-delete
@@ -57,17 +57,21 @@
       </v-data-table>
     </v-card>
     <ProductForm :form="productForm" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveProduct()" />
+    <Confirmation :dialogState="confirmDialog" @close="confirmDialog = false" @confirm="deleteProduct"/>
 
 </div>
 </template>
 <script>
+  import Confirmation from '../../../components/Confirm.vue'
   import ProductForm from '../../../components/adminForms/Product.vue'
   export default {
     components: {
-      ProductForm
+      ProductForm,Confirmation
     },
     data() {
       return {
+        confirmDialog:false,
+        deletion_id: null,
         page: 0,
         total: 0,
         numberOfPages: 0,
@@ -180,9 +184,14 @@
         })
       }
     },
-    deleteProduct(product){
-      this.$admin.delete('/product/delete/'+ product.id).then(({data}) => {
+    deleteProduct(){
+      this.confirmDialog = false
+      this.$admin.delete('/product/delete/'+ this.deletion_id).then(({data}) => {
+        if(data.error) {
+          alert(data.error);
+        }
         this.initialize() 
+        this.deletion_id = null
       })
     }
   },

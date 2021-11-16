@@ -50,7 +50,7 @@
                                 <v-col cols="2">
                                    <v-btn
                                         icon
-                                        @click="deleteDeliveryMan(deliver_man.id)"
+                                        @click="confirmDialog = true,deletion_id = deliver_man.id"
                                         color="red"
                                     >
                                         <v-icon dark>
@@ -81,16 +81,20 @@
             </v-row>
         </v-container>
         <DeliveryManForm :form="deliveryManForm" :dialogState="addition_dailog" @close="addition_dailog = false" @save="addition_dailog = false,saveDeliveryMan()" />
+        <Confirmation :dialogState="confirmDialog" @close="confirmDialog = false" @confirm="deleteDeliveryMan"/>
     </div>
 </template>
 <script>
     import DeliveryManForm from '../../../components/adminForms/DeliveryMan.vue'
+  import Confirmation from '../../../components/Confirm.vue'
     export default {
         components : {
-            DeliveryManForm
+            DeliveryManForm,Confirmation
         },
         data: () => ({
             addition_dailog: false,
+            deletion_id: null,
+            confirmDialog : false,
             deliveryManForm : {
                 name:'',
                 username: '',
@@ -121,9 +125,12 @@
                     this.initialize()
                 })
             },
-            deleteDeliveryMan (id) {
-                this.$admin.delete('/delivery-man/delete/'+id).then(({data}) => {
+            deleteDeliveryMan () {
+                this.confirmDialog = false
+                this.$admin.delete('/delivery-man/delete/'+this.deletion_id).then(({data}) => {
                     this.initialize()
+                    this.deletion_id = null
+
                 })
             },
         }

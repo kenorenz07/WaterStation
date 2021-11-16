@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AuthenticationController extends Controller
 {
@@ -34,6 +35,9 @@ class AuthenticationController extends Controller
             'email' => 'required',
             'phone_number' => 'required',
             'password' => 'required',
+            'purok'=> 'required',
+            'brgy'=> 'required',
+            'additional_address'=> 'required'
         ]);
 
         
@@ -49,9 +53,46 @@ class AuthenticationController extends Controller
             'password' => bcrypt($request->password),
             'image' => $image_req ? $fileName : null ,
             'phone_number' => $request->phone_number,
+            'purok'=> $request->purok,
+            'brgy'=> $request->brgy,
+            'additional_address'=> $request->additional_address
         ]);
     }
 
+    public function update(Request $request)
+    {
+
+        $user = $request->user();
+        
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+            'purok'=> 'required',
+            'brgy'=> 'required',
+            'additional_address'=> 'required'
+        ]);
+
+        if(str_contains($request->image,'base64')){
+            if($user->image){
+                Storage::delete('app/public/updloads/'.$user->image);
+            }
+
+            $user->image =  $this->uploadImage($request->image);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->password = $request->password ? bcrypt($request->password) : $user->password ;
+        $user->purok = $request->purok;
+        $user->brgy = $request->brgy;
+        $user->additional_address = $request->additional_address;
+
+        $user->save();
+
+        return "success";
+    }
     public function login(Request $request)
     {
         $validator = $request->validate([

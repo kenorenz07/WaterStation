@@ -18,7 +18,12 @@ class SaleController extends Controller
         }
         $index->orderBy('created_at', 'desc');
 
-        return $index->paginate(10);
+        // return $index->paginate(10);
+        
+        return [
+            "sales" =>$index->paginate(10),
+            "grandtotal" => round($index->sum('total'), 2)
+        ];
     }
 
     public function createPDF($start,$end) 
@@ -30,7 +35,7 @@ class SaleController extends Controller
         ->orderBy("created_at", 'desc');
         
         // retreive all records from db
-        $data = ['sales' => $index->get()];
+        $data = ['sales' => $index->get(),"grandtotal" => round($index->sum('total'), 2)];
   
         // share data to view;
         $pdf = PDF::loadView('sale_reports', $data)->setPaper('a4', 'landscape');

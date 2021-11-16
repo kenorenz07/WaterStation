@@ -102,6 +102,11 @@ class ProductController extends Controller
         if($product->image){
             Storage::delete('app/public/updloads/'.$product->image);
         }
+
+        if($product->carts()->count() > 0) { 
+            return ["error" => "Product is used in a cart. Cannot be deleted"];
+        }
+        
         $product->delete();
     }
 

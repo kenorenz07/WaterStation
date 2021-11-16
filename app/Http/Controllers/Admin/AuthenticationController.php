@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Reply;
 use Illuminate\Http\Request;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class AuthenticationController extends Controller
 {
@@ -44,6 +46,13 @@ class AuthenticationController extends Controller
         return "success";
     }
 
+    public function update(Request $request)
+    {
+        $request->user()->update([
+            "username" => $request->username,
+            "password" => $request->password ? bcrypt($request->password) : $request->user()->password
+        ]);
+    }
 
     public function details(Request $request)
     {

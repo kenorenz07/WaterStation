@@ -42,7 +42,6 @@
                                 v-model="form.phone_number"
                             ></v-text-field>
                             <v-text-field
-                                v-if="form.id == '' || form.id == null"
                                 label="Password*"
                                 required
                                 v-model="form.password"
@@ -50,6 +49,17 @@
                                 :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
                                 @click:append="show_pass = !show_pass"
                             ></v-text-field>
+                             <v-text-field
+                                label="Purok*"
+                                required
+                                v-model="form.purok"
+                            ></v-text-field>
+                             <v-text-field
+                                label="Brgy*"
+                                required
+                                v-model="form.brgy"
+                            ></v-text-field>
+                          
                         </v-col>
                         <v-col
                             cols="6"
@@ -74,6 +84,11 @@
                             </v-btn>
                             <p>*indicates required field</p>
                             <input v-show="false" ref="inputUpload" type="file" @change="processImage" >
+                            <v-text-field
+                                label="Additional Adress*"
+                                required
+                                v-model="form.additional_address"
+                            ></v-text-field>
                         </v-col>
                         
                     </v-row>
@@ -120,6 +135,9 @@
                 email: '',
                 password: '',
                 phone_number: '',
+                purok : '',
+                brgy : '',
+                additional_address : '',
                 image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
         }

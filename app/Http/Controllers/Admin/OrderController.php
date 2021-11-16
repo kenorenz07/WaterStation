@@ -25,7 +25,10 @@ class OrderController extends Controller
         }
         $index->orderBy('created_at', 'desc');
 
-        return $index->paginate(10);
+        return [
+            "orders" =>$index->paginate(10),
+            "grandtotal" => round($index->sum('total'), 2)
+        ];
     }
 
     public function updateStatus(Order $order,Request $request)
@@ -65,7 +68,7 @@ class OrderController extends Controller
         ->orderBy("created_at", 'desc');
         
         // retreive all records from db
-        $data = ['orders' => $index->get()];
+        $data = ['orders' => $index->get(),"grandtotal" => round($index->sum('total'), 2)];
   
         // share data to view;
         $pdf = PDF::loadView('order_reports', $data)->setPaper('a4', 'landscape');

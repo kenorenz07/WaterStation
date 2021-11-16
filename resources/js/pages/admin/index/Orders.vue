@@ -50,6 +50,11 @@
                         Generate Report
                     </v-btn>
             </div>
+            <div class="d-flex justify-end" >
+                <h3>
+                    GRAND TOTAL : ₱ {{grand_total}}
+                </h3> 
+            </div>
             <v-row >
                 <v-col cols='12'>
                     <div class="d-flex justify-end" >
@@ -81,13 +86,14 @@
                         v-for="(order,i) in orders"
                         :key="i"
                         :class="order.status"
+                        v-if="orders.length > 0"
                         >
-                            <v-expansion-panel-header>Order # {{order.id}} by {{order.user.name}}</v-expansion-panel-header>
+                            <v-expansion-panel-header >Order # {{order.id}} by {{order.user.name}}</v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <v-row class="mt-1">
                                     <v-col cols="3">
                                         <p> Customer Details</p>
-                                        <div class="d-flex ml-4">
+                                        <div class="d-flex ml-4" >
                                             <v-avatar>
                                                 <img
                                                     :src="order.user.image ? '/storage/'+ order.user.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
@@ -278,6 +284,7 @@ export default {
     data : () =>({
         orders: [],
         page : 1,
+        grand_total: 0,
         pageNumbers: 1,
         date_pick: false,
         status_filters : ['on-the-way','assigned-to-driver', 'pending','delivered','accepted','denied','all'],
@@ -314,8 +321,9 @@ export default {
 
             this.$admin.get('/order/all', { params })
             .then(({data}) => {
-                this.orders = data.data;
+                this.orders = data.orders.data;
 
+                this.grand_total = data.grandtotal
                 this.orders.forEach((order) => {
                     order.orders = JSON.parse(order.orders)
                 })

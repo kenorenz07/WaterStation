@@ -34,6 +34,9 @@
                 ></v-date-picker>
             </v-menu>  
         </div>
+        <h6 class="mx-5">
+            GRAND TOTAL : ₱ {{grand_total}}
+        </h6> 
         <v-btn class="ml-2" @click="generateDialog = true">
             Generate Report
         </v-btn>
@@ -127,6 +130,7 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
       return {
         page: 0,
         total: 0,
+        grand_total: 0,
         numberOfPages: 0,
         sales: [],
         loading: true,
@@ -180,8 +184,10 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
         this.$admin.get('/sales/all', { params })
           .then(({data}) => {
             //Then injecting the result to datatable parameters.
+            this.sales = data.sales.data;
+
+            this.grand_total = data.grandtotal
             this.loading = false;
-            this.sales = data.data;
             this.page = data.page;
             this.total = data.total;
             this.numberOfPages = data.last_page;
