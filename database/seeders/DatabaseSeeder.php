@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
             "email" => "user1@gmail.com",
             "phone_number" => "08928663354",
             "purok" => "purok 2",
+            "image" => "cus_1637042936.jpeg",
             "brgy" => "brgy 2",
+            "city" => "Calbayog",
             "additional_address" => "additional_address 2",
             "password" => bcrypt(123123),
         ]);
@@ -33,7 +35,9 @@ class DatabaseSeeder extends Seeder
             "name" => "keno_erenz",
             "email" => "keno@renz.com",
             "phone_number" => "08928663354",
+            "image" => "cus_1637042936.jpeg",
             "purok" => "purok 1",
+            "city" => "Calbayog",
             "brgy" => "brgy 1",
             "additional_address" => "additional_address 1",
             "password" => bcrypt(123123123),
@@ -54,8 +58,8 @@ class DatabaseSeeder extends Seeder
             Product::create([
                 "name" => "product_".$i,
                 "price" => $i + .01,
-                "image" => "pro_1633188855.jpeg",
-                "description" => "size 1x".$i
+                "image" => "pro_1634802727.jpeg",
+                "description" => "size 1x".$i,
             ]);
         }
         Artisan::call('passport:install');

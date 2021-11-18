@@ -37,6 +37,7 @@ class AuthenticationController extends Controller
             'password' => 'required',
             'purok'=> 'required',
             'brgy'=> 'required',
+            'city'=> 'required',
             'additional_address'=> 'required'
         ]);
 
@@ -55,6 +56,7 @@ class AuthenticationController extends Controller
             'phone_number' => $request->phone_number,
             'purok'=> $request->purok,
             'brgy'=> $request->brgy,
+            'city'=> $request->city,
             'additional_address'=> $request->additional_address
         ]);
     }
@@ -70,6 +72,7 @@ class AuthenticationController extends Controller
             'phone_number' => 'required',
             'purok'=> 'required',
             'brgy'=> 'required',
+            'city'=> 'required',
             'additional_address'=> 'required'
         ]);
 
@@ -87,6 +90,7 @@ class AuthenticationController extends Controller
         $user->password = $request->password ? bcrypt($request->password) : $user->password ;
         $user->purok = $request->purok;
         $user->brgy = $request->brgy;
+        $user->city = $request->city;
         $user->additional_address = $request->additional_address;
 
         $user->save();
