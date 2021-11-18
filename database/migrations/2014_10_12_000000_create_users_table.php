@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('purok');
             $table->string('brgy');
             $table->string('city');
+            $table->string('landmark');
             $table->string('additional_address');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

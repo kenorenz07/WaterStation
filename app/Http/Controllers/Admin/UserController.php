@@ -57,6 +57,7 @@ class UserController extends Controller
             'purok'=> 'required',
             'brgy'=> 'required',
             'city'=> 'required',
+            'landmark'=> 'required',
             'additional_address'=> 'required'
         ]);
 
@@ -74,6 +75,7 @@ class UserController extends Controller
             'image' => $image_req ? $fileName : null ,
             'purok'=> $request->purok,
             'city'=> $request->city,
+            'landmark'=> $request->landmark,
             'brgy'=> $request->brgy,
             'additional_address'=> $request->additional_address
         ]);
@@ -90,6 +92,7 @@ class UserController extends Controller
             'phone_number' => 'required',
             'purok'=> 'required',
             'city'=> 'required',
+            'landmark'=> 'required',
             'brgy'=> 'required',
             'additional_address'=> 'required'
         ]);
@@ -108,6 +111,7 @@ class UserController extends Controller
         $user->password = $request->password ? bcrypt($request->password) : $user->password ;
         $user->purok = $request->purok;
         $user->brgy = $request->brgy;
+        $user->landmark = $request->landmark;
         $user->city = $request->city;
         $user->additional_address = $request->additional_address;
 

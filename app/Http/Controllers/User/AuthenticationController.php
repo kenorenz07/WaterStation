@@ -38,6 +38,7 @@ class AuthenticationController extends Controller
             'purok'=> 'required',
             'brgy'=> 'required',
             'city'=> 'required',
+            'landmark'=> 'required',
             'additional_address'=> 'required'
         ]);
 
@@ -56,6 +57,7 @@ class AuthenticationController extends Controller
             'phone_number' => $request->phone_number,
             'purok'=> $request->purok,
             'brgy'=> $request->brgy,
+            'landmark'=> $request->landmark,
             'city'=> $request->city,
             'additional_address'=> $request->additional_address
         ]);
@@ -73,6 +75,7 @@ class AuthenticationController extends Controller
             'purok'=> 'required',
             'brgy'=> 'required',
             'city'=> 'required',
+            'landmark'=> 'required',
             'additional_address'=> 'required'
         ]);
 
@@ -91,6 +94,7 @@ class AuthenticationController extends Controller
         $user->purok = $request->purok;
         $user->brgy = $request->brgy;
         $user->city = $request->city;
+        $user->landmark = $request->landmark;
         $user->additional_address = $request->additional_address;
 
         $user->save();

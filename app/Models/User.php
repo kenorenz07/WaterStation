@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phone_number',
         'purok',
         'city',
+        'landmark',
         'brgy',
         'additional_address'
     ];

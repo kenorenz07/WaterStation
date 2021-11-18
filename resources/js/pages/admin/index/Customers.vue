@@ -105,6 +105,7 @@
           purok : '',
           brgy : '',
           city : '',
+          landmark : '',
           additional_address : '',
           image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
         }
@@ -126,6 +127,7 @@
                 purok : '',
                 brgy : '',
                 city : '',
+                landmark : '',
                 additional_address : '',
                 image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
@@ -155,6 +157,7 @@
                 purok : '',
                 brgy : '',
                 city : '',
+                landmark : '',
                 additional_address : '',
                 image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
@@ -169,6 +172,7 @@
                 purok : user.purok,
                 brgy : user.brgy,
                 city : user.city,
+                landmark : user.landmark,
                 additional_address : user.additional_address,
                 image: '/storage/'+user.image,
             }
