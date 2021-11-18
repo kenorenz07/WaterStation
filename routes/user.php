@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\AnnouncementController;
 use App\Http\Controllers\User\AuthenticationController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController;
@@ -24,6 +25,7 @@ Route::post('/register',[AuthenticationController::class, 'register']);
 Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user'] ],function(){
     // authenticated staff routes here 
     Route::get('/details',[AuthenticationController::class, 'details']);
+    Route::get('/update',[AuthenticationController::class, 'update']);
     Route::post('logout',[AuthenticationController::class, 'logout']);
 
     Route::get('/product/all',[ProductController::class,'index']);
@@ -40,5 +42,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user']
     Route::post('reviews/add',[ReviewController::class,'create']);
     Route::put('reviews/update/{review}',[ReviewController::class,'update']);
     Route::delete('reviews/delete/{review}',[ReviewController::class,'delete']);
+
+    Route::get('announcement',[AnnouncementController::class,'index']);
 
 });
