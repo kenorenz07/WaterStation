@@ -79,6 +79,15 @@ class AuthenticationController extends Controller
             'additional_address'=> 'required'
         ]);
 
+        if($request->password || $request->confirm_password){
+            if($request->password == $request->confirm_password){
+                $user->password = $request->password ? bcrypt($request->password) : $user->password ;
+            }
+            else {
+                return ["error" => "password not match"];
+            }
+        }
+
         if(str_contains($request->image,'base64')){
             if($user->image){
                 Storage::delete('app/public/updloads/'.$user->image);
@@ -90,7 +99,6 @@ class AuthenticationController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
-        $user->password = $request->password ? bcrypt($request->password) : $user->password ;
         $user->purok = $request->purok;
         $user->brgy = $request->brgy;
         $user->city = $request->city;

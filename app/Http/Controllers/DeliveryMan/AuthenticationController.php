@@ -69,6 +69,14 @@ class AuthenticationController extends Controller
             'phone_number' => 'required',
         ]);
 
+        if($request->password || $request->confirm_password){
+            if($request->password == $request->confirm_password){
+                $delivery_man->password = $request->password ? bcrypt($request->password) : $delivery_man->password ;
+            }
+            else {
+                return ["error" => "password not match"];
+            }
+        }
         if(str_contains($request->image,'base64')){
             if($delivery_man->image){
                 Storage::delete('app/public/updloads/'.$delivery_man->image);
@@ -80,7 +88,6 @@ class AuthenticationController extends Controller
         $delivery_man->name = $request->name;
         $delivery_man->username = $request->username;
         $delivery_man->phone_number = $request->phone_number;
-        $delivery_man->password = $request->password ? bcrypt($request->password) : $delivery_man->password ;
 
         return $delivery_man->save();
     }
