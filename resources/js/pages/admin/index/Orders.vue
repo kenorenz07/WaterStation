@@ -104,6 +104,11 @@
                                                 <p class="m-0">{{order.user.name}}</p>
                                                 <p>{{order.user.email}}</p>
                                                 <p>{{order.user.phone_number}}</p>
+                                                <p>Purok :{{order.user.purok}}</p>
+                                                <p>Brgy. : {{order.user.brgy}}</p>
+                                                <p>City: {{order.user.city}}</p>
+                                                <p>Landmark: {{order.user.landmark}}</p>
+                                                <p>Addtional Address: {{order.user.additional_address}}</p>
                                             </div>
                                         </div>
                                         <p> Delivery Man Details</p>
