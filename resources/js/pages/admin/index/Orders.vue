@@ -102,13 +102,13 @@
                                             </v-avatar>
                                             <div class="ml-4">
                                                 <p class="m-0">{{order.user.name}}</p>
-                                                <p>{{order.user.email}}</p>
-                                                <p>{{order.user.phone_number}}</p>
-                                                <p>Purok :{{order.user.purok}}</p>
-                                                <p>Brgy. : {{order.user.brgy}}</p>
-                                                <p>City: {{order.user.city}}</p>
-                                                <p>Landmark: {{order.user.landmark}}</p>
-                                                <p>Addtional Address: {{order.user.additional_address}}</p>
+                                                <p class="m-0">{{order.user.email}}</p>
+                                                <p class="m-0">{{order.user.phone_number}}</p>
+                                                <p class="m-0">Purok :{{order.user.purok}}</p>
+                                                <p class="m-0">Brgy. : {{order.user.brgy}}</p>
+                                                <p class="m-0">City: {{order.user.city}}</p>
+                                                <p class="m-0">Landmark: {{order.user.landmark}}</p>
+                                                <p class="m-0">Addtional Address: {{order.user.additional_address}}</p>
                                             </div>
                                         </div>
                                         <p> Delivery Man Details</p>
