@@ -25,7 +25,7 @@ Route::post('/register',[AuthenticationController::class, 'register']);
 Route::group( ['prefix' => '/v1','middleware' => ['auth:user-api','scopes:user'] ],function(){
     // authenticated staff routes here 
     Route::get('/details',[AuthenticationController::class, 'details']);
-    Route::get('/update',[AuthenticationController::class, 'update']);
+    Route::post('/update',[AuthenticationController::class, 'update']);
     Route::post('logout',[AuthenticationController::class, 'logout']);
 
     Route::get('/product/all',[ProductController::class,'index']);
