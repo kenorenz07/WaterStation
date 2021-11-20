@@ -22,7 +22,7 @@ Route::post('/login',[AuthenticationController::class, 'login']);
 Route::group( ['prefix' => '/v1','middleware' => ['auth:delivery_man-api','scopes:delivery_man'] ],function(){
     // authenticated staff routes here 
     Route::get('/details',[AuthenticationController::class, 'details']);
-    Route::get('/update',[AuthenticationController::class, 'update']);
+    Route::post('/update',[AuthenticationController::class, 'update']);
  
 
     Route::post('logout',[AuthenticationController::class, 'logout']);
