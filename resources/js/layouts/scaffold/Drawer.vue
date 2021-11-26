@@ -65,7 +65,7 @@ import Confirmation from '../../components/Confirm.vue'
           { title: 'Customers', icon: 'mdi-account-group', route: '/customers' },
           { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
           { title: 'Orders', icon: 'mdi-cart', route: '/orders' },
-          { title: 'Products', icon: 'mdi-cash-100', route: '/products' },
+          { title: 'Products', icon: 'mdi-water', route: '/products' },
           { title: 'Reviews', icon: 'mdi-message-draw', route: '/reviews' },
           { title: 'Sales', icon: 'mdi-point-of-sale', route: '/sales' },
         ],

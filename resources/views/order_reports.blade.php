@@ -11,7 +11,7 @@
     <h3 class="text-left">GRAND TOTAL : {{"PHP ".$grandtotal}}</h3>
     <table class="table table-bordered mb-5">
         <thead>
-            <tr class="table-danger">
+            <tr class="table-primary">
                 <th scope="col">Order #</th>
                 <th scope="col">Customer</th>
                 <th scope="col">Delivery man</th>

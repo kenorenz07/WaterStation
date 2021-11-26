@@ -8,7 +8,7 @@
     
       <v-card>
         <v-card-title>
-          <span class="text-h5">{{form.id ?'Edit' :'Create'}} Customers</span>
+          <span class="text-h5">{{form.id ?'Edit' :'Create'}} Customer</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -90,7 +90,7 @@
                             <p>*indicates required field</p>
                             <input v-show="false" ref="inputUpload" type="file" @change="processImage" >
                             <v-text-field
-                                label="Additional Adress*"
+                                label="Additional Address*"
                                 required
                                 v-model="form.additional_address"
                             ></v-text-field>

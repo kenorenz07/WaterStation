@@ -10,7 +10,7 @@ class OrderController extends Controller
 {
     public function getAll(Request $request)
     {
-        return $request->user()->orders;
+        return $request->user()->orders()->where('status','!=','delivered')->get();
     }
     public function updateStatus(Order $order,Request $request)
     {

@@ -42,6 +42,9 @@ class AuthenticationController extends Controller
             'additional_address'=> 'required'
         ]);
 
+        if(User::where('email',$request->email)->exists()){
+            return ["error_email" => true];
+        }
         
         $image_req = str_contains($request->image,'base64');
 
@@ -78,6 +81,10 @@ class AuthenticationController extends Controller
             'landmark'=> 'required',
             'additional_address'=> 'required'
         ]);
+
+        if(User::where('email',$request->email)->exists() && $user->email != $request->email ){
+            return ["error_email" => true];
+        }
 
         if($request->password || $request->confirm_password){
             if($request->password == $request->confirm_password){
