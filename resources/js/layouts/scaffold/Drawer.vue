@@ -6,7 +6,7 @@
         <template v-slot:prepend> 
           <v-list-item >
               <v-list-item-avatar>
-                  <v-img src="https://cdn-icons-png.flaticon.com/512/599/599508.png"></v-img>
+                  <v-img src="/images/icon.png"></v-img>
               </v-list-item-avatar>
 
               <v-list-item-title class="text-subtitle-1">
