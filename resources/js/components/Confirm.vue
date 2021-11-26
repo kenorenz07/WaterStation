@@ -3,7 +3,7 @@
     <v-dialog
       v-model="confimDialog"
       persistent
-      max-width="300px"
+      max-width="500px"
     >
     
       <v-card>
