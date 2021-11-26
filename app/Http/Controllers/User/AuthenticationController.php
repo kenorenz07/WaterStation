@@ -14,6 +14,15 @@ class AuthenticationController extends Controller
         // $this->middleware('guest:user')->except('logout');
     }
     
+    public function string_between_two_string($str, $starting_word, $ending_word){
+        $arr = explode($starting_word, $str);
+        if (isset($arr[1])){
+            $arr = explode($ending_word, $arr[1]);
+            return $arr[0];
+        }
+        return '';
+    }
+    
     public function uploadImage($image)
     {
         $exploded_base64 = explode(',', $image);
