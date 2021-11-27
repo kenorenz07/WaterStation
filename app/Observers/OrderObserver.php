@@ -34,7 +34,7 @@ class OrderObserver
                 'orders' => $order->orders,
                 'total' => $order->total,
                 'date_delivered' => Carbon::now(),
-                'time_delivered' => date('H:i:s', time())
+                'time_delivered' => $order->time_to_deliver
             ]);
         }
        
