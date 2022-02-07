@@ -14,7 +14,13 @@ class UserController extends Controller
     {
         $per_page = $request->query('per_page') ? $request->query('per_page') : 10;
 
-        return User::paginate($per_page);
+        $users = User::query();
+        
+        if($request->query('search_key')){
+            $users
+                ->orWhere("name", 'LIKE', "%".$request->query('search_key')."%");
+        }
+        return $users->paginate($per_page);
     }
 
     public function uploadImage($image)

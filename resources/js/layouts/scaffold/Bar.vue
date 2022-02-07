@@ -2,7 +2,7 @@
     <v-app-bar app color="light-blue">
       <v-app-bar-nav-icon @click="$emit('drawerChange')"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>WATER STATION</v-toolbar-title>
+      <v-toolbar-title>ALKSURE WATER REFILLING STATION</v-toolbar-title>
       <v-spacer></v-spacer>
         <AdminForm :dialogState="admin_dialog" @close="admin_dialog = false" />
       <v-spacer></v-spacer>

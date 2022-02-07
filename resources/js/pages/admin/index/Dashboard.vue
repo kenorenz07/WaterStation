@@ -198,7 +198,7 @@
                     curve: 'smooth'
                 },
                 title: {
-                    text: 'Sales',
+                    text: 'Delivered Orders',
                     align: 'left'
                 },
                 grid: {
@@ -216,7 +216,7 @@
                 },
                 yaxis: {
                     title: {
-                        text: 'Sales'
+                        text: 'Quantity'
                     },
                     min: 5,
                     max: 60
@@ -260,7 +260,7 @@
                     this.chartOptions ={
                         yaxis :{
                             title: {
-                                text: 'Sales'
+                                text: 'Quantity'
                             },
                             min: data.sales[1],
                             max: data.sales[2]

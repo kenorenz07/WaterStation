@@ -21,14 +21,14 @@
                             dark
                             flat
                         >
-                            <v-toolbar-title>Water Station</v-toolbar-title>
+                            <v-toolbar-title>Alkasure Water Refilling Station (ADMIN)</v-toolbar-title>
                            
                         </v-toolbar>
                         <v-card-text>
                             <v-form>
                                 <v-text-field
                                     v-model="form.username"
-                                    label="Login"
+                                    label="Username"
                                     name="login"
                                     prepend-icon="person"
                                     type="text"
@@ -48,7 +48,7 @@
                         </v-card-text>
                         <v-card-actions >
                             <v-spacer></v-spacer>
-                            <v-btn color="light-blue" @click="login_admin()">Login</v-btn>
+                            <v-btn color="light-blue" @click="login_admin()">Log in</v-btn>
                         </v-card-actions>
                         </v-card>
                     </v-flex>
@@ -63,15 +63,15 @@ export default {
     data: () => ({
         show_pass: false,
         form: {
-            username: 'admin1',
-            password: 123123,
+            username: '',
+            password: '',
         }
     }),
     methods : {
         login_admin(){
             axios.post('/admin/login',this.form).then(({data}) => {
                 if(data.error) {
-                    alert("Username or password are incorrect")
+                    alert("Incorrect Username or Password!")
                 }
                 else{
 

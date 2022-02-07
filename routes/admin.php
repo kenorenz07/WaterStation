@@ -66,7 +66,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
 
     // SALES
     Route::get('/sales/all',[SaleController::class,'index']);
-    Route::get('/sales/generate-pdf/{start}/{end}', [SaleController::class, 'createPDF']);
+    Route::get('/sales/generate-pdf/{start}/{end}/{delivery_men}', [SaleController::class, 'createPDF']);
 
     // REVIEWS 
     Route::get('/reviews/all',[ReviewController::class,'index']);

@@ -10,7 +10,7 @@
               </v-list-item-avatar>
 
               <v-list-item-title class="text-subtitle-1">
-                Welcome {{admin_detials.username}} !
+                Welcome {{admin_detials.username}}!
               </v-list-item-title>
 
           </v-list-item>
@@ -39,7 +39,7 @@
       <template v-slot:append>
         <div class="pa-2">
           <v-btn block @click="confirmDialog = true">
-            Logout
+            Log out
           </v-btn>
         </div>
       </template>
@@ -63,11 +63,11 @@ import Confirmation from '../../components/Confirm.vue'
           { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
           { title: 'Announcements', icon: 'mdi-bullhorn', route: '/announcements' },
           { title: 'Customers', icon: 'mdi-account-group', route: '/customers' },
-          { title: 'Delivery', icon: 'mdi-car', route: '/delivery-men' },
-          { title: 'Orders', icon: 'mdi-cart', route: '/orders' },
+          { title: 'Delivery Men', icon: 'mdi-car', route: '/delivery-men' },
           { title: 'Products', icon: 'mdi-water', route: '/products' },
+          { title: 'Delivery Orders', icon: 'mdi-cart', route: '/orders' },
           { title: 'Reviews', icon: 'mdi-message-draw', route: '/reviews' },
-          { title: 'Sales', icon: 'mdi-point-of-sale', route: '/sales' },
+          { title: 'Delivery Sales', icon: 'mdi-point-of-sale', route: '/sales' },
         ],
         admin_detials: {},
         route_open: ''

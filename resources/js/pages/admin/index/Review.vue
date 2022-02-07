@@ -9,10 +9,10 @@
                                 Customer Name
                             </th>
                             <th class="text-left">
-                                Review/Created At
+                                Date of Review
                             </th>
                             <th class="text-left">
-                                Updated At
+                                Review Modified Date by Customer
                             </th>
                             <th class="text-left">
                                 Actions

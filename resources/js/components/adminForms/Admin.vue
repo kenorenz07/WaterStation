@@ -8,7 +8,7 @@
     
       <v-card>
         <v-card-title>
-          <span class="text-h5">Edit admin</span>
+          <span class="text-h5">Update admin account</span>
         </v-card-title>
         <v-card-text>
           <v-container>

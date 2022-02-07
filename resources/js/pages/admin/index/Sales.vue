@@ -5,7 +5,7 @@
         outlined
     >
         <v-card-title>
-            Sales
+            Delivery Sales
         <v-spacer></v-spacer>
         <div>
             <v-menu
@@ -19,7 +19,7 @@
                 <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                     v-model="date_filter"
-                    label="Select "
+                    label="Select Date"
                     prepend-icon="mdi-calendar"
                     readonly
                         color="light-blue"
@@ -34,8 +34,41 @@
                 ></v-date-picker>
             </v-menu>  
         </div>
+        <div class="mx-4 pb-3">
+            <v-select
+                :items="delivery_men"
+                v-model="filter_delivery_men"
+                label="Select delivery_man/s"
+                item-text="name"
+                item-value="id"
+                class="multi-select-del"
+                max-height="auto"
+                autocomplete
+                multiple
+                chips
+            >
+                <template v-slot:prepend-item>
+                    <v-list-item
+                        ripple
+                        @click="toggleFilter"
+                    >
+                        <v-list-item-action>
+                            <v-icon :color="filter_delivery_men.length > 0 ? 'indigo darken-4' : ''">
+                                {{ filter_icon_selected }}
+                            </v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                Select All
+                            </v-list-item-title>
+                        </v-list-item-content>
+                        </v-list-item>
+                    <v-divider class="mt-2"></v-divider>
+                </template>
+            </v-select>
+        </div>
         <h6 class="mx-5">
-            GRAND TOTAL : ₱ {{grand_total}}
+            TOTAL SALES: ₱{{grand_total}}
         </h6> 
         <v-btn class="ml-2" @click="generateDialog = true">
             Generate Report
@@ -78,7 +111,7 @@
             
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">Select Filter for report</span>
+                    <span class="text-h5">Select Filter for Sales Report</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -93,6 +126,42 @@
                                         v-model="generate_dates"
                                         range
                                     ></v-date-picker>
+                                </div>
+                            </v-col>
+                            <v-col >   
+                               
+                                <label for="">Filter Delivery men</label>
+                                <div>
+                                    <v-select
+                                        :items="delivery_men"
+                                        v-model="generate_by_delivery_men"
+                                        label="Select delivery_man/s"
+                                        item-text="name"
+                                        item-value="id"
+                                        max-height="auto"
+                                        autocomplete
+                                        multiple
+                                        chips
+                                    >
+                                        <template v-slot:prepend-item>
+                                            <v-list-item
+                                                ripple
+                                                @click="toggle"
+                                            >
+                                                <v-list-item-action>
+                                                    <v-icon :color="generate_by_delivery_men.length > 0 ? 'indigo darken-4' : ''">
+                                                        {{ icon_selected }}
+                                                    </v-icon>
+                                                </v-list-item-action>
+                                                <v-list-item-content>
+                                                    <v-list-item-title>
+                                                        Select All
+                                                    </v-list-item-title>
+                                                </v-list-item-content>
+                                                </v-list-item>
+                                            <v-divider class="mt-2"></v-divider>
+                                        </template>
+                                    </v-select>
                                 </div>
                             </v-col>
                         </v-row>
@@ -110,6 +179,7 @@
                     <v-btn
                         color="blue darken-1"
                         text
+                        :disabled="generate_by_delivery_men.length < 1"
                         @click="downloadPDF"
                     >
                         Generate
@@ -142,33 +212,66 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
           "items-per-page-options" : [5,10,15, 30, ]
         },
         headers: [
-          { text: "Customer name", value: "customer_name" },
-          { text: "Delivery man username", value: "delivery_name" },
-          { text: "Total (PHP)", value: "total" },
-          { text: "Date delivered", value: "date_delivered" },
-          { text: "Time delivered", value: "time_delivered" },
+          { text: "Customer Name", value: "customer_name" },
+          { text: "Delivery Man", value: "delivery_name" },
+          { text: "Sub Total (php)", value: "total" },
+          { text: "Date Delivered", value: "date_delivered" },
+          { text: "Time Delivered", value: "time_delivered" },
           { text: "Actions", value: "actions" },
         ],
         date_pick: false,
         date_filter: (new Date()).toISOString().split('T')[0],
         sales_to_show : {},
+        filter_delivery_men  : [],
 
         generateDialog: false,
         generate_date_pick: false,
         generate_dates: [(new Date()).toISOString().split('T')[0],(new Date(new Date().getTime()+(14*24*60*60*1000))).toISOString().split('T')[0]],
+        generate_by_delivery_men : [],
+        delivery_men : [],
       };
   },
   //this one will populate new data set when user changes current page. 
   watch: {
-    options: {
-      handler(val) {
-        this.initialize() 
-      },
-        deep: true
-    },
+    // options: {
+    //   handler(val) {
+    //     // if(val.page != 0)
+    //         this.initialize() 
+    //   },
+    //     deep: true
+    // },
     date_filter (val) {
-        this.initialize()
+        if(val != (new Date()).toISOString().split('T')[0])
+            this.initialize()
+    },
+    filter_delivery_men (val) {
+        if(val != [])
+            this.initialize()
     } 
+  },
+  computed : {
+    selectsAll () {
+        return this.generate_by_delivery_men.length === this.delivery_men.length
+    },
+    selectSome () {
+        return this.generate_by_delivery_men.length > 0 && !this.selectsAll
+    },
+    icon_selected () {
+        if (this.selectsAll) return 'mdi-close-box'
+        if (this.selectSome) return 'mdi-minus-box'
+        return 'mdi-checkbox-blank-outline'
+    },
+    filter_selectsAll () {
+        return this.filter_delivery_men.length === this.delivery_men.length
+    },
+    filter_selectSome () {
+        return this.filter_delivery_men.length > 0 && !this.selectsAll
+    },
+    filter_icon_selected () {
+        if (this.filter_selectsAll) return 'mdi-close-box'
+        if (this.filter_selectSome) return 'mdi-minus-box'
+        return 'mdi-checkbox-blank-outline'
+    },
   },
   methods: {
     //Reading data from API method. 
@@ -178,21 +281,62 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
         let params = { 
             page: page,
             per_page: itemsPerPage,
-            date_filter : this.date_filter
+            date_filter : this.date_filter,
+            filter_delivery_men : JSON.stringify(this.filter_delivery_men)
 
         } 
         this.$admin.get('/sales/all', { params })
           .then(({data}) => {
             //Then injecting the result to datatable parameters.
             this.sales = data.sales.data;
-
+            console.log(data)
             this.grand_total = data.grandtotal
             this.loading = false;
-            this.page = data.page;
-            this.total = data.total;
-            this.numberOfPages = data.last_page;
+            this.page = data.sales.page;
+            this.total = data.sales.total;
+            this.numberOfPages = data.sales.last_page;
           });
     },
+    getDeliveryMen() {
+        this.$admin.get('/delivery-man/all').then(({data}) => {
+            this.delivery_men = data.map((delivery_man) => {
+                return {
+                    id : delivery_man.id,
+                    name : delivery_man.name,
+                }
+            })
+            this.filter_delivery_men = this.delivery_men.map((delivery_man) => {
+                return delivery_man.id
+            })
+        })
+    },
+    toggleFilter() {
+        this.$nextTick(() => {
+            if (this.filter_selectsAll) {
+                console.log('gsgs')
+                this.filter_delivery_men = []
+            } else {
+                console.log('aaa')
+                this.filter_delivery_men = this.delivery_men.map((delivery_man) => {
+                    return delivery_man.id
+                })
+            }
+        })
+    },
+    toggle () {
+        this.$nextTick(() => {
+            if (this.selectsAll) {
+                console.log('gsgs')
+                this.generate_by_delivery_men = []
+            } else {
+                console.log('aaa')
+                this.generate_by_delivery_men = this.delivery_men.map((delivery_man) => {
+                    return delivery_man.id
+                })
+            }
+        })
+    },
+    
     modalPop(sales){
         this.sales_to_show = {
             created_at: sales.created_at, 
@@ -212,14 +356,14 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
     },
       downloadPDF()
       {
-          this.$admin.get('/sales/generate-pdf/'+this.generate_dates[0]+'/'+this.generate_dates[1],{
+          this.$admin.get('/sales/generate-pdf/'+this.generate_dates[0]+'/'+this.generate_dates[1]+'/'+JSON.stringify(this.generate_by_delivery_men),{
               responseType: 'arraybuffer'
           })
           .then(response => {
               const url = window.URL.createObjectURL(new Blob([response.data]));
               const link = document.createElement('a');
               link.href = url;
-              link.setAttribute('download', 'SALESREPORT'+this.generate_dates[0]+'-'+this.generate_dates[1]+'.pdf');
+              link.setAttribute('download', 'DELSALESREPORT'+this.generate_dates[0]+'-'+this.generate_dates[1]+'.pdf');
               document.body.appendChild(link);
               link.click();
               // let blob = new Blob([response.data], { type: 'application/pdf' }),
@@ -233,6 +377,12 @@ import SalesForm from '../../../components/adminForms/Sales.vue'
   //this will trigger in the onReady State
   mounted() {
     this.initialize();
+    this.getDeliveryMen();
   },
   }
 </script>
+<style lang="scss">
+ .multi-select-del{
+    max-width: 300px;
+ }
+</style>

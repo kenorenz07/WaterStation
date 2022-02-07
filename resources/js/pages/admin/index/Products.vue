@@ -7,6 +7,14 @@
       <v-card-title>
         Products
       <v-spacer></v-spacer>
+       <v-text-field
+            v-model="search_key"
+            append-icon="mdi-magnify"
+            label="Search"
+            class="shrink mr-5"
+            single-line
+            hide-details
+        ></v-text-field>
         <v-icon
           large
           @click="addProduct"
@@ -99,7 +107,8 @@
           is_refill: true,
           price: 0.0,
           image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
-        }
+        },
+        search_key : '',
       };
   },
   //this one will populate new data set when user changes current page. 
@@ -109,7 +118,11 @@
         this.initialize() 
       },
     },
-    deep: true,
+    search_key : {
+          handler(val){
+              this.initialize()
+          }
+      }
   },
   methods: {
     //Reading data from API method. 
@@ -125,7 +138,8 @@
         const { page, itemsPerPage } = this.options;
         let params = { 
           page: page,
-          per_page: itemsPerPage
+          per_page: itemsPerPage,
+          search_key: this.search_key
         } 
         this.$admin.get('/product/all', { params })
           .then(({data}) => {

@@ -74,6 +74,6 @@ class OrderController extends Controller
         $pdf = PDF::loadView('order_reports', $data)->setPaper('a4', 'landscape');
   
         // download PDF file with download method
-        return $pdf->download('ORDERREPORT'.$start.'-'.$end.'.pdf');
+        return $pdf->download('DELORDERSREPORT'.$start.'-'.$end.'.pdf');
     }
 }

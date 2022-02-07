@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             "email" => "user1@gmail.com",
             "phone_number" => "08928663354",
             "purok" => "purok 2",
-            "image" => "cus_1637042936.jpeg",
+            "image" => "cus_1643027079.jpeg",
             "brgy" => "brgy 2",
             "landmark" => "Mcdo",
             "city" => "Calbayog",
@@ -33,19 +33,25 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            "name" => "keno_erenz",
-            "email" => "keno@renz.com",
-            "phone_number" => "08928663354",
-            "image" => "cus_1637042936.jpeg",
-            "purok" => "purok 1",
+            "name" => "Romnick Cian B. Jaropojop",
+            "email" => "jromnick_cian@yahoo.com",
+            "phone_number" => "09975882350",
+            "image" => "cus_1643099198.jpeg",
+            "purok" => "P-3",
             "city" => "Calbayog",
-            "landmark" => "Jolibee",
-            "brgy" => "brgy 1",
-            "additional_address" => "additional_address 1",
-            "password" => bcrypt(123123123),
+            "landmark" => "Near Crispy King",
+            "brgy" => "Matobato",
+            "additional_address" => "none",
+            "password" => bcrypt(123123),
         ]);
+        
         Admin::create([
             "username" => "admin1",
+            "password" => bcrypt(123123),
+        ]);
+
+        Admin::create([
+            "username" => "administrator",
             "password" => bcrypt(123123),
         ]);
 
@@ -53,14 +59,15 @@ class DatabaseSeeder extends Seeder
             "username" => "delivery1",
             "name" => "John Doe d1",
             "phone_number" => "08928663354",
+            "image" => "1635179660.jpeg",
             "password" => bcrypt(123123),
         ]);
 
-        for($i = 1; $i <=50;$i++){
+        for($i = 1; $i <=10;$i++){
             Product::create([
                 "name" => "product_".$i,
                 "price" => $i + .01,
-                "image" => "pro_1634802727.jpeg",
+                //"image" => "pro_1643027575.jpeg",
                 "description" => "size 1x".$i,
             ]);
         }

@@ -13,7 +13,14 @@ class ProductController extends Controller
     {
         $per_page = $request->query('per_page') ? $request->query('per_page') : 10;
 
-        return Product::paginate($per_page);
+        $products = Product::query();
+        
+        if($request->query('search_key')){
+            $products
+                ->orWhere("name", 'LIKE', "%".$request->query('search_key')."%");
+        }
+
+        return $products->paginate($per_page);
     }
 
     public function uploadImage($image)

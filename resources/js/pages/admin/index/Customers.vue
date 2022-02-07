@@ -7,6 +7,15 @@
       <v-card-title>
         Customers
       <v-spacer></v-spacer>
+        <v-text-field
+          
+            v-model="search_key"
+            append-icon="mdi-magnify"
+            label="Search"
+            class="shrink mr-5"
+            single-line
+            hide-details
+        ></v-text-field>
         <v-icon
           large
           @click="addUser"
@@ -108,12 +117,17 @@
           landmark : '',
           additional_address : '',
           image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
-        }
+        },
+        search_key : '',
       };
     },
     //this one will populate new data set when user changes current page. 
     watch: {
-    
+      search_key : {
+            handler(val){
+                this.initialize()
+            }
+        }
     },
     methods: {
         //Reading data from API method. 
@@ -132,10 +146,11 @@
                 image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F2180657%2Fadd_add_photo_upload_plus_icon&psig=AOvVaw2bCaC6AsrefFBHZ3Id8IAP&ust=1632066273765000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIC3-ejuiPMCFQAAAAAdAAAAABAD',
             }
             this.loading = true;
-            const { page, itemsPerPage } = this.options;
-            let params = { 
-            page: page,
-            per_page: itemsPerPage
+              const { page, itemsPerPage } = this.options;
+              let params = { 
+              page: page,
+              per_page: itemsPerPage,
+              search_key: this.search_key
             } 
             this.$admin.get('/user/all', { params })
             .then(({data}) => {
@@ -207,3 +222,5 @@
     },
   }
 </script>
+<style scoped>
+</style>

@@ -8,7 +8,7 @@
     
       <v-card>
         <v-card-title>
-          <span class="text-h5">Sale details</span>
+          <span class="text-h5">Delivery Sales Details</span>
         </v-card-title>
          <v-card-text>
             <v-container>
@@ -18,28 +18,28 @@
                         <div class="d-flex ml-4">
                             <v-avatar>
                                 <img
-                                    :src="order.user.image ? '/storage/'+ order.user.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
-                                    :alt="order.user.name"
+                                    :src="order.user ? '/storage/'+ order.user.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
+                                    :alt="order.user ? order.user.name:  '' "
                                 >
                             </v-avatar>
                             <div class="ml-4">
-                                <p class="m-0">{{order.user.name}}</p>
-                                <p>{{order.user.email}}</p>
-                                <p>{{order.user.phone_number}}</p>
+                                <p class="m-0">{{order.user ? order.user.name: ''}}</p>
+                                <p>{{order.user ? order.user.email: ''}}</p>
+                                <p>{{order.user ? order.user.phone_number: ''}}</p>
                             </div>
                         </div>
                         <p> Delivery Man Details</p>
                         <div class="d-flex" v-if="order.delivery_man_id">
                             <v-avatar>
                                 <img
-                                    :src="order.delivery_man.image ? '/storage/'+ order.delivery_man.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
-                                    :alt="order.delivery_man.name"
+                                    :src="order.delivery_man ? '/storage/'+ order.delivery_man.image: 'https://upload.wikimedia.org/wikipedia/commons/7/71/Nothing_whitespace_blank.png'"
+                                    :alt="order.delivery_man ? order.delivery_man.name: ''"
                                 >
                             </v-avatar>
                             <div class="ml-4">
-                                <p class="m-0">{{order.delivery_man.name}}</p>
-                                <p>{{order.delivery_man.username}}</p>
-                                <p>{{order.delivery_man.phone_number}}</p>
+                                <p class="m-0">{{order.delivery_man ? order.delivery_man.name : ''}}</p>
+                                <p>{{order.delivery_man ? order.delivery_man.username: ''}}</p>
+                                <p>{{order.delivery_man ? order.delivery_man.phone_number: ''}}</p>
                             </div>
                         </div>
                         <div v-else >
@@ -47,11 +47,11 @@
                                 Not Assigned
                             </p>
                         </div>
-                        <p> Ordered at : {{moment(order.created_at).calendar()}}</p>
-                        <p> Date Delivered : {{order.date_delivered ? order.date_delivered : "Not Defined" }}</p>
-                        <p> Time Delivered : {{order.time_delivered ? order.time_delivered : "Not Defined" }}</p>
+                        <!--<p> Time Delivered: {{moment(order.created_at).calendar()}}</p>-->
+                        <p> Date Delivered: {{order.date_delivered ? order.date_delivered : "Not Defined" }}</p>
+                        <p> Time Delivered: {{order.time_delivered ? order.time_delivered : "Not Defined" }}</p>
                         <div>
-                            Total Bill : ₱ {{order.total}}
+                            Total Bill: ₱{{order.total}}
                         </div>
                     </v-col>
                     <v-col cols="9">
@@ -60,7 +60,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-left">
-                                            Name
+                                            Product Name
                                         </th>
                                         <th class="text-left">
                                             Description
@@ -69,7 +69,7 @@
                                             Product Price
                                         </th>
                                         <th class="text-left">
-                                            For refill
+                                            For Refill
                                         </th>
                                         <th class="text-left">
                                             Quantity
@@ -94,10 +94,10 @@
                                             {{ item.product.name }}
                                         </td>
                                         <td>{{ item.product.description }}</td>
-                                        <td>₱ {{ item.product.price }}</td>
+                                        <td>₱{{ item.product.price }}</td>
                                         <td>{{ item.product.is_refill ? "Yes" : "Container for sale" }}</td>
                                         <td>{{ item.quantity }}</td>
-                                        <td>₱ {{ item.total_price }}</td>
+                                        <td>₱{{ item.total_price }}</td>
                                     </tr>
                                 </tbody>
                             </template>

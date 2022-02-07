@@ -3,7 +3,7 @@
         <v-container>
             <div class="d-flex justify-space-between mb-6" >
                 <div>
-                    <h1> ORDERS </h1>
+                    <h3> DELIVERY ORDERS </h3>
                 </div>
                 <div>
                     <v-menu
@@ -17,7 +17,7 @@
                         <template v-slot:activator="{ on, attrs }">
                         <v-text-field
                             v-model="date_filter"
-                            label="Select "
+                            label="Select Date"
                             prepend-icon="mdi-calendar"
                             readonly
                              color="light-blue"
@@ -52,7 +52,7 @@
             </div>
             <div class="d-flex justify-end" >
                 <h3>
-                    GRAND TOTAL : ₱ {{grand_total}}
+                    TOTAL SALES: ₱{{grand_total}}
                 </h3> 
             </div>
             <v-row >
@@ -88,11 +88,11 @@
                         :class="order.status"
                         v-if="orders.length > 0"
                         >
-                            <v-expansion-panel-header >Order # {{order.id}} by {{order.user.name}}</v-expansion-panel-header>
+                            <v-expansion-panel-header >Order #{{order.id}} by {{order.user.name}}</v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <v-row class="mt-1">
                                     <v-col cols="3">
-                                        <p> Customer Details</p>
+                                        <p>Customer Details</p>
                                         <div class="d-flex ml-4" >
                                             <v-avatar>
                                                 <img
@@ -104,8 +104,8 @@
                                                 <p class="m-0">{{order.user.name}}</p>
                                                 <p class="m-0">{{order.user.email}}</p>
                                                 <p class="m-0">{{order.user.phone_number}}</p>
-                                                <p class="m-0">Purok :{{order.user.purok}}</p>
-                                                <p class="m-0">Brgy. : {{order.user.brgy}}</p>
+                                                <p class="m-0">Purok: {{order.user.purok}}</p>
+                                                <p class="m-0">Brgy: {{order.user.brgy}}</p>
                                                 <p class="m-0">City: {{order.user.city}}</p>
                                                 <p class="m-0">Landmark: {{order.user.landmark}}</p>
                                                 <p class="m-0">Addtional Address: {{order.user.additional_address}}</p>
@@ -130,11 +130,11 @@
                                                 Not Assigned
                                             </p>
                                         </div>
-                                        <p> Ordered at : {{moment(order.created_at).calendar()}}</p>
-                                        <p> Date to Deliver : {{order.date_to_deliver ? order.date_to_deliver : "Not Defined" }}</p>
-                                        <p> Time to Deliver : {{order.time_to_deliver ? order.time_to_deliver : "Not Defined" }}</p>
+                                        <p> Ordered Time: {{moment(order.created_at).calendar()}}</p>
+                                        <p> Date to Deliver: {{order.date_to_deliver ? order.date_to_deliver : "Not Defined" }}</p>
+                                        <p> Time to Deliver: {{order.time_to_deliver ? order.time_to_deliver : "Not Defined" }}</p>
                                         <div>
-                                            Total Bill : ₱ {{order.total}}
+                                            Total Bill: ₱{{order.total}}
                                         </div>
                                         <v-btn
                                             block
@@ -151,7 +151,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="text-left">
-                                                            Name
+                                                            Product Name
                                                         </th>
                                                         <th class="text-left">
                                                             Description
@@ -160,7 +160,7 @@
                                                             Product Price
                                                         </th>
                                                         <th class="text-left">
-                                                            For refill
+                                                            For Refill
                                                         </th>
                                                         <th class="text-left">
                                                             Quantity
@@ -185,10 +185,10 @@
                                                             {{ item.product.name }}
                                                         </td>
                                                         <td>{{ item.product.description }}</td>
-                                                        <td>₱ {{ item.product.price }}</td>
+                                                        <td>₱{{ item.product.price }}</td>
                                                         <td>{{ item.product.is_refill ? "Yes" : "Container for sale" }}</td>
                                                         <td>{{ item.quantity }}</td>
-                                                        <td>₱ {{ item.total_price }}</td>
+                                                        <td>₱{{ item.total_price }}</td>
                                                     </tr>
                                                 </tbody>
                                             </template>
@@ -222,7 +222,7 @@
             
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">Select Filter for report</span>
+                    <span class="text-h5">Select Filter for Orders Report</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -353,7 +353,7 @@ export default {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', 'ORDERREPORT'+this.generate_dates[0]+'-'+this.generate_dates[1]+'.pdf');
+                link.setAttribute('download', 'DELORDERSREPORT'+this.generate_dates[0]+'-'+this.generate_dates[1]+'.pdf');
                 document.body.appendChild(link);
                 link.click();
             })

@@ -8,7 +8,7 @@
     
       <v-card>
         <v-card-title>
-          Are you sure you want to continue this action ? 
+          Are you sure you want to continue this action? 
         </v-card-title>
         <v-card-actions>
             <v-btn
